@@ -77,18 +77,26 @@ class ArticleController extends Controller
 
     public function show(Article $article)
     {
-        //
+        return $article;
     }
 
 
     public function update(UpdateArticleRequest $request, Article $article)
     {
-        //
+        $article->update($request->all());
+
+        return response()->json([
+            "success" => "update successfully",
+            "article" => $article
+        ],200);
     }
 
 
     public function destroy(Article $article)
     {
-        //
+       $article->delete();
+       return response()->json([
+        "success" => "delete successfully",
+       ],200);
     }
 }
