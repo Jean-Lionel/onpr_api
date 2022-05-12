@@ -17,7 +17,7 @@ class CreateArticlesTable extends Migration
             $table->id();
             $table->string('title');
             $table->string('slug')->unique();
-            $table->text('body');
+            $table->longText('body');
             $table->string('image')->nullable();
             $table->string('image_alt')->nullable();
             $table->string('image_title')->nullable();

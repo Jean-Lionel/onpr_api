@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Article;
+use App\Http\Controllers\UploadFile;
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
+use App\Models\Article;
 use Illuminate\Http\Request;
 
 class ArticleController extends Controller
@@ -65,6 +66,7 @@ class ArticleController extends Controller
 
     public function store(StoreArticleRequest $request)
     {
+        UploadFile::saveFile($request,);
         $article = Article::create($request->all());
 
         return response()->json([
