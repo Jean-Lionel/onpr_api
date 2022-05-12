@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,12 +20,19 @@ use Illuminate\Support\Facades\Route;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::get("articles", [ArticleController::class, "index"]);
-Route::apiResource('articles', ArticleController::class);
+
 
 Route::middleware('auth:sanctum')->group(function () {
    
     Route::get('/me',[AuthController::class, 'me']);
-    Route::post('/articles', [ArticleController::class, 'store']);
+    // Route::post('/articles', [ArticleController::class, 'store']);
+    
+    Route::apiResource('articles', ArticleController::class,
+    [
+        'except' => ['index', 'show']
+    ]);
+
+    Route::apiResource('users', UserController::class);
 
     Route::post('/logout', [AuthController::class, 'logout']);
 });
