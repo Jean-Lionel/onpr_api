@@ -20,7 +20,7 @@ class RoleSeeder extends Seeder
             "CHEF DE SERVICE"
         ];
 
-        foreach ($role as $roles){
+        foreach ($roles as $role){
             Role::create([
                 "name" => $role
             ]);

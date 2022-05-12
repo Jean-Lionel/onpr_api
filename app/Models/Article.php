@@ -18,7 +18,7 @@ class Article extends Model
         parent::boot();
         static::creating(function($model) {
             $model->slug = \Str::slug($model->title.'-'. date('dmY'));
-            $model->user_id = auth('sanctum')->user()->id;
+            $model->user_id = auth('sanctum')->user()->id ?? 0;
         });
     }
 }
