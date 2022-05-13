@@ -15,7 +15,7 @@ class YoutubeMediaController extends Controller
      */
     public function index()
     {
-        //
+        return YoutubeMedia::latest()->paginate();
     }
 
     /**
@@ -26,7 +26,10 @@ class YoutubeMediaController extends Controller
      */
     public function store(StoreYoutubeMediaRequest $request)
     {
-        //
+        YoutubeMedia::create($request->all());
+        return response()->json([
+            "success" => "youtube_media successfully"
+        ],200);
     }
 
     /**
@@ -37,7 +40,8 @@ class YoutubeMediaController extends Controller
      */
     public function show(YoutubeMedia $youtubeMedia)
     {
-        //
+        
+        return $youtubeMedia;
     }
 
     /**
@@ -60,6 +64,10 @@ class YoutubeMediaController extends Controller
      */
     public function destroy(YoutubeMedia $youtubeMedia)
     {
-        //
+        $youtubeMedia->delete();
+
+        return response()->json([
+            "success" => "YoutubeMedia deleted successfully"
+        ]);
     }
 }

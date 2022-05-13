@@ -20,17 +20,26 @@ use Illuminate\Support\Facades\Route;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::get("articles", [ArticleController::class, "index"]);
+Route::apiResource('youtube_medias', ArticleController::class,
+    [
+        'except' => ['index', 'show']
+    ]);
+Route::get("/searchArticle/{key_word}", [ArticleController::class, 'search']);
 
 
 Route::middleware('auth:sanctum')->group(function () {
-   
+ 
     Route::get('/me',[AuthController::class, 'me']);
     // Route::post('/articles', [ArticleController::class, 'store']);
     
     Route::apiResource('articles', ArticleController::class,
-    [
-        'except' => ['index', 'show']
-    ]);
+        [
+            'except' => ['index', 'show']
+        ]);
+    Route::apiResource('youtube_medias', ArticleController::class,
+        [
+            'except' => ['index', 'show']
+        ]);
 
     Route::apiResource('users', UserController::class);
 

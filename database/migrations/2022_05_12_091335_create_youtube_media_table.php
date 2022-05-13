@@ -19,6 +19,7 @@ class CreateYoutubeMediaTable extends Migration
             $table->longText('youtube_media');
             $table->foreignId("user_id");
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

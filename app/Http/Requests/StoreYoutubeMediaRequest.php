@@ -13,7 +13,7 @@ class StoreYoutubeMediaRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,6 +25,8 @@ class StoreYoutubeMediaRequest extends FormRequest
     {
         return [
             //
+            "youtube_title" => "required",
+            "youtube_media" => "required|min:20",
         ];
     }
 }

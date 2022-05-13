@@ -66,7 +66,7 @@ class ArticleController extends Controller
 
     public function store(StoreArticleRequest $request)
     {
-        UploadFile::saveFile($request,);
+        //UploadFile::saveFile($request,);
         $article = Article::create($request->all());
 
         return response()->json([
@@ -80,6 +80,16 @@ class ArticleController extends Controller
     public function show(Article $article)
     {
         return $article;
+    }
+
+    public function search($key_word){
+        $listeArclices = Article::where(function($query) use($key_word){
+            $query->where('title','LIKE', '%'.$key_word.'%')
+                  ->OrWhere('body', 'LIKE', '%'.$key_word.'%')
+                  ->OrWhere('slug', 'LIKE', '%'.$key_word.'%')
+                  ;
+        })->paginate();
+        return $listeArclices;
     }
 
 
