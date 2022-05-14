@@ -1,4 +1,6 @@
 <?php
+header('Access-Control-Allow-Origin: *');
+header( 'Access-Control-Allow-Headers: Authorization, Content-Type' );
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\ArticleController;
