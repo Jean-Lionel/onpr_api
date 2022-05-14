@@ -32,6 +32,9 @@ class AuthController extends Controller
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
+                'telephone' => $request->telephone,
+                'description' => $request->description,
+                'mobile' => $request->mobile,
                 'password' => Hash::make($request->password)
             ]);
             $token = $user->createToken('auth_token')->plainTextToken;
@@ -54,7 +57,10 @@ class AuthController extends Controller
         $user = User::where('email', $request['email'])->firstOrFail();
         $token = $user->createToken('auth_token')->plainTextToken;
         return response()->json([
-            'data' => Auth::user(),
+            'data' => [
+                "user" => Auth::user(),
+                "role" =>  $user->role
+            ],
             'access_token' => $token,
             'token_type' => 'Bearer',
         ]);
@@ -70,7 +76,7 @@ class AuthController extends Controller
         $user = Auth::user();
         $user->tokens()->delete();
         return response()->json([
-            'message' => 'Successfully logged out'
+            'success' => 'Successfully logged out'
         ]);
     }
 }

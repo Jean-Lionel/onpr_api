@@ -17,12 +17,14 @@ class RoleSeeder extends Seeder
         $roles = [
             "ADMINISTEUR",
             "EMPLOYEUR",
-            "CHEF DE SERVICE"
+            "CHEF DE SERVICE",
+            "AFILIER"
         ];
 
         foreach ($roles as $role){
             Role::create([
-                "name" => $role
+                "name" => $role,
+                "description" => $role
             ]);
         }
     }

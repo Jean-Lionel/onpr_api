@@ -1,9 +1,4 @@
 <?php
-header('Access-Control-Allow-Origin: http://localhost:8001');
-header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
-header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token,Authorization');
-header('Access-Control-Allow-Credentials: true');
-
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Http\Request;
 

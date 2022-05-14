@@ -48,17 +48,18 @@ class UserController extends Controller
      */
 
     public function create()
-
     {
-
         $roles = Role::pluck('name','name')->all();
-
         return $roles;
-
     }
 
-    
-
+    public function addRole($role_id){
+        
+        $user->roles()->sync($request->roles);
+        return response()->json([
+            "success" => "Role add successfully"
+        ]);
+    }
     /**
 
      * Store a newly created resource in storage.
@@ -78,30 +79,18 @@ class UserController extends Controller
         $this->validate($request, [
 
             'name' => 'required',
-
             'email' => 'required|email|unique:users,email',
-
-            'password' => 'required|same:confirm-password',
-
-            'roles' => 'required'
+            'password' => 'required',
+            'role_id' => 'required'
 
         ]);
 
-    
-
         $input = $request->all();
-
         $input['password'] = Hash::make($input['password']);
-
-    
-
+        
         $user = User::create($input);
-
-        $user->assignRole($request->input('roles'));
-
         // return redirect()->route('users.index')
-
-        //                 ->with('success','User created successfully');
+        //   ->with('success','User created successfully');
         return response()->json([
             'success','User created successfully'
         ]);
