@@ -7,6 +7,7 @@ use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
 use App\Models\Article;
 use Illuminate\Http\Request;
+use Image;
 
 class ArticleController extends Controller
 {
@@ -66,8 +67,45 @@ class ArticleController extends Controller
 
     public function store(StoreArticleRequest $request)
     {
-        //UploadFile::saveFile($request,);
-        $article = Article::create($request->all());
+        if(!$request->hasFile("image")) {
+            return response()->json(['upload_file_not_found'], 400);
+        }
+
+        $imageName = '';
+        if (isset($request->image)) {
+            # code...
+            $file = $request->file("image"); 
+            $allowedfileExtension=['pdf','jpg','png'];
+            $extension = $file->getClientOriginalExtension();
+            $check = in_array($extension,$allowedfileExtension);
+
+            if (!$check) {
+            // code...
+                return response()->json(['error' => 'Unknown extention type '], 400); 
+             }
+           
+            $image = $request->file('image');
+
+            $imageName = time() . '.'. $image->getClientOriginalExtension();
+
+            $destinationPath  = public_path('img\articles');
+            $imageFile = Image::make($image->getRealPath());
+
+            $imageFile->resize(400,600,function($constraint){
+                $constraint->aspectRatio();
+            })->save($destinationPath .'/'.   $imageName);
+
+            // $destinationPath = public_path('/uploads');
+            // $image->move($destinationPath, $imageName);
+        }
+
+        $article = Article::create([
+            'title' => $request->title,
+            'body' => $request->body,
+            'image' => $imageName ,           
+            'image_alt' => $request->title,
+
+        ]);
 
         return response()->json([
             "success" => "Arcticle created",

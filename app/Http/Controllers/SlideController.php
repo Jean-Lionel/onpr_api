@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Role;
-use App\Http\Requests\StoreRoleRequest;
-use App\Http\Requests\UpdateRoleRequest;
+use App\Models\Slide;
+use App\Http\Requests\StoreSlideRequest;
+use App\Http\Requests\UpdateSlideRequest;
 
-class RoleController extends Controller
+class SlideController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,16 +15,16 @@ class RoleController extends Controller
      */
     public function index()
     {
-        return Role::all();
+       return Slide::paginate();
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreRoleRequest  $request
+     * @param  \App\Http\Requests\StoreSlideRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreRoleRequest $request)
+    public function store(StoreSlideRequest $request)
     {
         //
     }
@@ -32,10 +32,10 @@ class RoleController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Role  $role
+     * @param  \App\Models\Slide  $slide
      * @return \Illuminate\Http\Response
      */
-    public function show(Role $role)
+    public function show(Slide $slide)
     {
         //
     }
@@ -43,11 +43,11 @@ class RoleController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateRoleRequest  $request
-     * @param  \App\Models\Role  $role
+     * @param  \App\Http\Requests\UpdateSlideRequest  $request
+     * @param  \App\Models\Slide  $slide
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateRoleRequest $request, Role $role)
+    public function update(UpdateSlideRequest $request, Slide $slide)
     {
         //
     }
@@ -55,10 +55,10 @@ class RoleController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Role  $role
+     * @param  \App\Models\Slide  $slide
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Role $role)
+    public function destroy(Slide $slide)
     {
         //
     }

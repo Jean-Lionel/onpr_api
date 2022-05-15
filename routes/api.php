@@ -1,6 +1,8 @@
 <?php
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SlideController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,6 +25,11 @@ Route::apiResource('youtube_medias', ArticleController::class,
     [
         'except' => ['index', 'show']
     ]);
+
+Route::apiResource('slides', SlideController::class,
+    [
+        'except' => ['index', 'show']
+    ]);
 Route::get("/searchArticle/{key_word}", [ArticleController::class, 'search']);
 
 
@@ -34,6 +41,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('articles', ArticleController::class,
         [
             'except' => ['index', 'show']
+        ])
+    Route::apiResource('slides', SlideController::class,
+        [
+            'except' => ['index', 'show']
         ]);
     Route::apiResource('youtube_medias', ArticleController::class,
         [
@@ -41,6 +52,7 @@ Route::middleware('auth:sanctum')->group(function () {
         ]);
 
     Route::apiResource('users', UserController::class);
+    Route::apiResource('roles', RoleController::class);
 
     Route::post('/logout', [AuthController::class, 'logout']);
 });

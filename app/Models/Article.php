@@ -21,4 +21,9 @@ class Article extends Model
             $model->user_id = auth('sanctum')->user()->id ?? 0;
         });
     }
+
+    public function getImageSourceUrlAttribute(){
+
+        return asset('img/articles/'.$this->image );
+    }
 }
