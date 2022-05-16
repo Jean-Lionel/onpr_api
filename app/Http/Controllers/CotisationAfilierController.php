@@ -16,6 +16,7 @@ class CotisationAfilierController extends Controller
     public function index()
     {
         //
+        return CotisationAfilier::latest()->paginate(10);
     }
 
     /**

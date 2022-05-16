@@ -16,12 +16,16 @@ class CreateCotisationAfiliersTable extends Migration
         Schema::create('cotisation_afiliers', function (Blueprint $table) {
             $table->id();
             $table->string('matricule');
+            $table->string('nom')->nullable();
+            $table->string('prenom')->nullable();
+            $table->string('telephone')->nullable();
             $table->integer('mois');
             $table->integer('annee');
             $table->double('cotisation_employee', 64,2)->default(0);
             $table->double('salaire_base',64,2)->default(0);
             $table->double('points',64,2)->default(0);
             $table->foreignId('user_id');
+            $table->foreignId('afilier_id')->nullable();
             $table->foreignId('institution_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
