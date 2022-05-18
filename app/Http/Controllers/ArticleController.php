@@ -75,7 +75,7 @@ class ArticleController extends Controller
         if (isset($request->image)) {
             # code...
             $file = $request->file("image"); 
-            $allowedfileExtension=['pdf','jpg','png'];
+            $allowedfileExtension=['jpeg','jpg','png','jpeg'];
             $extension = $file->getClientOriginalExtension();
             $check = in_array($extension,$allowedfileExtension);
 

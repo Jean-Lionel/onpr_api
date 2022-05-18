@@ -12,4 +12,13 @@ class Institution extends Model
 
     protected $guarded = [];
 
+    public static function boot()
+    {
+        parent::boot();
+        static::creating(function($model) {
+           
+            $model->user_id = auth('sanctum')->user()->id ?? 0;
+        });
+    }
+
 }

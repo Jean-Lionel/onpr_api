@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Institution;
 use App\Http\Requests\StoreInstitutionRequest;
 use App\Http\Requests\UpdateInstitutionRequest;
+use Illuminate\Http\Request;
 
 class InstitutionController extends Controller
 {
@@ -16,6 +17,29 @@ class InstitutionController extends Controller
     public function index()
     {
         return Institution::latest()->paginate(10);
+    }
+
+    public function search($search_key){
+
+         //$search_key = $request->query('search_key');
+
+         if($search_key == 'ALL_DATA') return $this->index();
+
+
+        $institutions = Institution::where(function($query) use ($search_key){
+            if($search_key){
+                $query->where('name', 'like', '%'.$search_key . '%' )
+                  ->orWhere('telephone', 'like', '%'.$search_key. '%')
+                  ->orWhere('email', 'like', '%'.$search_key. '%')
+                  ->orWhere('address', 'like', '%'.$search_key. '%');
+
+            }
+            
+
+        })->paginate(10);
+
+
+        return $institutions;
     }
 
     /**

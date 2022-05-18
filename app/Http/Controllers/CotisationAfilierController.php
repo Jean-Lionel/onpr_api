@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CotisationAfilier;
 use App\Http\Requests\StoreCotisationAfilierRequest;
 use App\Http\Requests\UpdateCotisationAfilierRequest;
+use Illuminate\Http\Request;
 
 class CotisationAfilierController extends Controller
 {
@@ -17,6 +18,25 @@ class CotisationAfilierController extends Controller
     {
         //
         return CotisationAfilier::latest()->paginate(10);
+    }
+
+    /**
+     * store data
+     * @param    $request
+     **/
+
+    public function saveUploadData(Request $request){
+        $body = json_decode($request->data, true);
+
+       $user_id =  auth('sanctum')->user()->id ?? 0;
+        $body = collect($body)->map(function($ligne) use ($user_id){
+            $ligne['user_id'] = $user_id;
+
+            return $ligne;
+        });
+        CotisationAfilier::insert($body->toArray());
+
+        return $body;
     }
 
     /**

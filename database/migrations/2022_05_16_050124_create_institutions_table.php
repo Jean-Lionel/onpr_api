@@ -19,6 +19,7 @@ class CreateInstitutionsTable extends Migration
             $table->string('identify')->nullable();
             $table->string('address')->nullable();
             $table->string('telephone')->nullable();
+            $table->string('type_istutions')->nullable();
             $table->string('email')->nullable();
             $table->string('chef_institution')->nullable();
             $table->text('description')->nullable();

@@ -26,6 +26,9 @@ class Article extends Model
 
     public function getImageSourceUrlAttribute(){
 
+        if (filter_var($this->image, FILTER_VALIDATE_URL)) { 
+            return $this->image;
+        }
         return asset('img/articles/'.$this->image );
     }
 }
