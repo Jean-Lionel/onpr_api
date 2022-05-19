@@ -19,13 +19,18 @@ class InstitutionController extends Controller
         return Institution::latest()->paginate(10);
     }
 
+    public function groupby($typeInstution)
+    {
+       $instustitions = Institution::where('typeInstution','like', $typeInstution)->get();
+
+       return $instustitions;
+    }
+
     public function search($search_key){
 
          //$search_key = $request->query('search_key');
 
          if($search_key == 'ALL_DATA') return $this->index();
-
-
         $institutions = Institution::where(function($query) use ($search_key){
             if($search_key){
                 $query->where('name', 'like', '%'.$search_key . '%' )

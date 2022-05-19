@@ -28,9 +28,14 @@ class CotisationAfilierController extends Controller
     public function saveUploadData(Request $request){
         $body = json_decode($request->data, true);
 
+        $request->validate([
+            'institution_id' => 'required',
+        ]);
        $user_id =  auth('sanctum')->user()->id ?? 0;
-        $body = collect($body)->map(function($ligne) use ($user_id){
+       $institution_id = $request->institution_id;
+        $body = collect($body)->map(function($ligne) use ($user_id, $institution_id){
             $ligne['user_id'] = $user_id;
+            $ligne['institution_id'] = $institution_id;
 
             return $ligne;
         });

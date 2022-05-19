@@ -15,7 +15,7 @@ class SlideController extends Controller
      */
     public function index()
     {
-       return Slide::paginate();
+       return Slide::latest()->paginate();
     }
 
     /**

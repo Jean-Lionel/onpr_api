@@ -26,7 +26,7 @@ class StoreYoutubeMediaRequest extends FormRequest
         return [
             //
             "youtube_title" => "required",
-            "youtube_media" => "required|min:20",
+            "youtube_media" => "required|min:40",
         ];
     }
 }

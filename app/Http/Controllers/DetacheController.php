@@ -15,7 +15,7 @@ class DetacheController extends Controller
      */
     public function index()
     {
-        //
+       
     }
 
     /**

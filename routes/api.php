@@ -2,6 +2,7 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CotisationAfilierController;
+use App\Http\Controllers\CotisationDetacheController;
 use App\Http\Controllers\InstitutionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SlideController;
@@ -23,7 +24,6 @@ use Illuminate\Support\Facades\Route;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
-Route::post('/cotisations', [CotisationAfilierController::class, 'saveUploadData']);
 
 Route::get("articles", [ArticleController::class, "index"]);
 Route::apiResource('youtube_medias', ArticleController::class,[
@@ -33,6 +33,7 @@ Route::apiResource('slides', SlideController::class, [
         'except' => ['index', 'show']
     ]);
 Route::get("/searchArticle/{key_word ?}", [ArticleController::class, 'search']);
+
 Route::middleware('auth:sanctum')->group(function () {
     
     Route::get('/me',[AuthController::class, 'me']);
@@ -46,9 +47,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('youtube_medias', ArticleController::class,[
             'except' => ['index', 'show']
         ]);
+    Route::post('/cotisations', [CotisationAfilierController::class, 'saveUploadData']);
+    Route::post('/cotisations_detaches', [CotisationDetacheController::class, 'saveUploadData']);
+
     Route::apiResource('users', UserController::class);
     Route::apiResource('cotisation_afiliers', CotisationAfilierController::class);
     Route::apiResource('institutions', InstitutionController::class);
+    Route::get('institutions/groupby/{typeInstution}', [InstitutionController::class, 'groupby']);
     Route::get('institutions/search/{search_key}', [InstitutionController::class, 'search']);
     Route::apiResource('roles', RoleController::class);
     Route::post('/logout', [AuthController::class, 'logout']);
