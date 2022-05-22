@@ -34,6 +34,10 @@ Route::apiResource('slides', SlideController::class, [
     ]);
 Route::get("/searchArticle/{key_word ?}", [ArticleController::class, 'search']);
 
+Route::get("cotisations_afiliers/{matricule}", [CotisationAfilierController::class, "searchByMatricule"]);
+
+Route::get("cotisation_detaches/{matricule}", [CotisationDetacheController::class, "searchByMatricule"]);
+
 Route::middleware('auth:sanctum')->group(function () {
     
     Route::get('/me',[AuthController::class, 'me']);

@@ -19,6 +19,16 @@ class CotisationDetacheController extends Controller
         return CotisationDetache::latest()->paginate(10);
     }
 
+    public function searchByMatricule($matricule)
+    {
+
+        $cotisations = CotisationDetache::where('matricule', '=',$matricule )
+        ->orderBy('annee','DESC')->orderBy('mois', 'DESC')->get();
+
+        return $cotisations->count() ? $cotisations : "Le Numéro Matricule introuvable";
+    }
+
+
     public function saveUploadData(Request $request){
         $request->validate([
             'institution_id' => 'required',

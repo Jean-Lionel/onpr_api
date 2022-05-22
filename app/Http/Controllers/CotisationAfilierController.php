@@ -20,6 +20,15 @@ class CotisationAfilierController extends Controller
         return CotisationAfilier::latest()->paginate(10);
     }
 
+    public function searchByMatricule($matricule)
+    {
+
+        $cotisations = CotisationAfilier::where('matricule', '=',$matricule )
+        ->orderBy('annee','DESC')->orderBy('mois', 'DESC')->get();
+
+        return $cotisations->count() ? $cotisations : "Le Numéro Matricule introuvable";
+    }
+
     /**
      * store data
      * @param    $request
