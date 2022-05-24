@@ -3,6 +3,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CotisationAfilierController;
 use App\Http\Controllers\CotisationDetacheController;
+use App\Http\Controllers\DeclarationController;
 use App\Http\Controllers\InstitutionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SlideController;
@@ -38,6 +39,8 @@ Route::get("cotisations_afiliers/{matricule}", [CotisationAfilierController::cla
 
 Route::get("cotisation_detaches/{matricule}", [CotisationDetacheController::class, "searchByMatricule"]);
 
+Route::post("declaration", [DeclarationController::class, 'store']);
+
 Route::middleware('auth:sanctum')->group(function () {
     
     Route::get('/me',[AuthController::class, 'me']);
@@ -48,11 +51,16 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('slides', SlideController::class,[
             'except' => ['index', 'show']
         ]);
+
+
     Route::apiResource('youtube_medias', ArticleController::class,[
             'except' => ['index', 'show']
         ]);
+    Route::apiResource('declarations', DeclarationController::class);
     Route::post('/cotisations', [CotisationAfilierController::class, 'saveUploadData']);
     Route::post('/cotisations_detaches', [CotisationDetacheController::class, 'saveUploadData']);
+
+    Route::get("unReadDeclaration", [DeclarationController::class, 'unReadDeclaration']);
 
     Route::apiResource('users', UserController::class);
     Route::apiResource('cotisation_afiliers', CotisationAfilierController::class);

@@ -21,12 +21,14 @@ class CreateDeclarationsTable extends Migration
             $table->string("email")->nullable();
             //Employeur
             $table->string("nom_declarant");
-            $table->text("motif_declaration");
+            $table->longText("motif_declaration");
             $table->date("date_declaration");
             $table->string("victime_name");
             $table->string("victime_prenom");
+            $table->string("type_declaration")->nullable();
             $table->string("victime_matricule")->nullable();
             $table->string("victime_telephone")->nullable();
+            $table->string("victime_fonction")->nullable();
             $table->string("file_name_1");
             $table->string("file_justification_1");
             $table->string("file_name_2")->nullable();
