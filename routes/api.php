@@ -52,7 +52,8 @@ Route::middleware('auth:sanctum')->group(function () {
             'except' => ['index', 'show']
         ]);
 
-
+    Route::get('get_user_by_instutions/{institution_id}', [InstitutionController::class, 'get_user_by_instutions'
+    ]);
     Route::apiResource('youtube_medias', ArticleController::class,[
             'except' => ['index', 'show']
         ]);

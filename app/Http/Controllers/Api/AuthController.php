@@ -55,6 +55,13 @@ class AuthController extends Controller
             ], 401);
         }
         $user = User::where('email', $request['email'])->firstOrFail();
+
+        if($user->is_active == 0){
+            return response()->json([
+                'message' => "Vôtre compte a été bloqué; Veuillez consulter le service Informatique de ONPR !!!" 
+            ], 401);
+
+        }
         $token = $user->createToken('auth_token')->plainTextToken;
         return response()->json([
             'data' => [

@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Institution;
 use App\Http\Requests\StoreInstitutionRequest;
 use App\Http\Requests\UpdateInstitutionRequest;
+use App\Models\Institution;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class InstitutionController extends Controller
@@ -17,6 +18,13 @@ class InstitutionController extends Controller
     public function index()
     {
         return Institution::latest()->paginate(10);
+    }
+
+    public function get_user_by_instutions($institution_id)
+    {
+        $users = User::where('institution_id', $institution_id)->get();
+
+        return $users;
     }
 
     public function groupby($typeInstution)

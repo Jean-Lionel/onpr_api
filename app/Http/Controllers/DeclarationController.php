@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Declaration;
 use App\Http\Requests\StoreDeclarationRequest;
 use App\Http\Requests\UpdateDeclarationRequest;
+use App\Models\Declaration;
+use App\Models\UserReadMessage;
 
 class DeclarationController extends Controller
 {
@@ -88,7 +89,19 @@ class DeclarationController extends Controller
      */
     public function show(Declaration $declaration)
     {
-        //
+        $declaration->update([
+            'is_opened' => 1
+        ]);
+
+        UserReadMessage::create([
+            'declaration_id' => $declaration->id
+        ]);
+
+        $declaration->file_justification_1 = $declaration->getFile_1Attribute();
+        $declaration->file_justification_2 = $declaration->getFile_2Attribute();
+        $declaration->file_justification_3 = $declaration->getFile_3Attribute();
+
+        return $declaration;
     }
 
     /**
