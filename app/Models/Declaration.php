@@ -18,7 +18,6 @@ class Declaration extends Model
         return asset('documents/uploads/'.$this->file_justification_1 );
     }
     public function getFile_2Attribute(){
-
         
         return asset('documents/uploads/'.$this->file_justification_2 );
     }

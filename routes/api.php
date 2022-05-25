@@ -5,6 +5,7 @@ use App\Http\Controllers\CotisationAfilierController;
 use App\Http\Controllers\CotisationDetacheController;
 use App\Http\Controllers\DeclarationController;
 use App\Http\Controllers\InstitutionController;
+use App\Http\Controllers\OnlineDeclarationDetacheController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SlideController;
 use App\Http\Controllers\UserController;
@@ -54,6 +55,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('get_user_by_instutions/{institution_id}', [InstitutionController::class, 'get_user_by_instutions'
     ]);
+    Route::get('get_user_instution', [InstitutionController::class, 'getUserInstution'
+    ]);
     Route::apiResource('youtube_medias', ArticleController::class,[
             'except' => ['index', 'show']
         ]);
@@ -64,6 +67,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get("unReadDeclaration", [DeclarationController::class, 'unReadDeclaration']);
 
     Route::apiResource('users', UserController::class);
+    Route::apiResource('online_declaration_detaches', OnlineDeclarationDetacheController::class);
     Route::apiResource('cotisation_afiliers', CotisationAfilierController::class);
     Route::apiResource('institutions', InstitutionController::class);
     Route::get('institutions/groupby/{typeInstution}', [InstitutionController::class, 'groupby']);

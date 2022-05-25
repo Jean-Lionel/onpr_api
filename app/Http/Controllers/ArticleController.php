@@ -81,7 +81,8 @@ class ArticleController extends Controller
 
             if (!$check) {
             // code...
-                return response()->json(['error' => 'Unknown extention type '], 400); 
+                return response()->json(
+                    ['error' => 'Unknown extention type '], 400); 
              }
            
             $image = $request->file('image');

@@ -15,6 +15,7 @@ class CreateOnlineDeclarationDetachesTable extends Migration
     {
         Schema::create('online_declaration_detaches', function (Blueprint $table) {
             $table->id();
+            $table->string('titre')->nullable();
             $table->string('code_instution');
             $table->string('nom_instution');
             $table->string('mois');
@@ -28,6 +29,7 @@ class CreateOnlineDeclarationDetachesTable extends Migration
             $table->string('file_name_3')->nullable();
             $table->string('file_uploaded_3')->nullable();
             $table->foreignId('user_id');
+            $table->foreignId('institution_id');
             $table->boolean('is_opened')->default(false);
             $table->timestamps();
             $table->softDeletes();

@@ -13,7 +13,7 @@ class StoreOnlineDeclarationDetacheRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,15 @@ class StoreOnlineDeclarationDetacheRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            "titre" => "required",
+            "code_instution" => "required",
+            "nom_instution" => "required",
+            "mois" => "required",
+            "annee" => "required",
+            "date_declaration" => "required",
+            "description" => "required",
+            "institution_id" => "required",
+           
         ];
     }
 }

@@ -34,6 +34,20 @@ class InstitutionController extends Controller
        return $instustitions;
     }
 
+    public function getUserInstution(){
+
+        $user = auth('sanctum')->user();
+
+        $instustition = Institution::where('id', $user->institution_id)->get();
+
+        if($instustition->count() == 0){
+            return response()->json([
+                'error' => "Vous n'avais aucun droit de déclaration"
+            ], 403);
+        }
+        return $instustition;
+    }
+
     public function search($search_key){
 
          //$search_key = $request->query('search_key');

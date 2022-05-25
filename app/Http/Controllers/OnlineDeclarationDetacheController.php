@@ -26,7 +26,54 @@ class OnlineDeclarationDetacheController extends Controller
      */
     public function store(StoreOnlineDeclarationDetacheRequest $request)
     {
-        //
+         $file_name_1 = '';
+         $file_name_2 = '';
+
+        if (isset($request->file_uploaded_1)) {
+            // code...
+          $extension  = $request->file_uploaded_1->extension();
+          if($extension !== 'pdf'){
+            return response()->json([
+                ['error' => 'Le fichier de type  '.$extension. " n'est pas accepté . " ]
+            ], 400);
+          }
+
+          $file_name_1 = time().'.'.$extension;
+
+           $request->file_uploaded_1->move(public_path('documents/declaration'), $file_name_1);
+        }
+        if (isset($request->file_uploaded_2)) {
+            // code...
+          $extension  = $request->file_uploaded_2->extension();
+          if($extension !== 'pdf'){
+            return response()->json([
+                ['error' => 'Le fichier de type  '.$extension. " n'est pas accepté . " ]
+            ], 400);
+          }
+          $file_name_2 = time().'.'.$extension;
+           $request->file_uploaded_2->move(public_path('documents/declaration'), $file_name_2);
+        }
+
+        OnlineDeclarationDetache::create([
+                "titre" => $request->titre,
+                "code_instution" => $request->code_instution,
+                "nom_instution" => $request->nom_instution,
+                "mois" => $request->mois,
+                "annee" => $request->annee,
+                "date_declaration" => $request->date_declaration,
+                "description" => $request->description,
+                "file_name_1" => $request->file_name_1,
+                "file_uploaded_1" => $file_name_1,
+                "file_name_2" => $request->file_name_2,
+                "file_uploaded_2" => $file_name_2,
+                "user_id" => auth('sanctum')->user()->id,
+                "institution_id" => $request->institution_id,
+
+        ]);
+
+        return response()->json([
+            "success" => 'Vos données ont été envoyé'
+        ]);
     }
 
     /**
