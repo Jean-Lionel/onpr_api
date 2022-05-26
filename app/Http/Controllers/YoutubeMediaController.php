@@ -41,6 +41,7 @@ class YoutubeMediaController extends Controller
     public function show(YoutubeMedia $youtubeMedia)
     {
         
+        
         return $youtubeMedia;
     }
 

@@ -56,6 +56,8 @@ Route::middleware('auth:sanctum')->group(function () {
             'except' => ['index', 'show']
         ]);
 
+    // Route::get("users/institution/{id}", [UserController::class, 'get_user_by_instutions' ])
+
     Route::get('get_user_by_instutions/{institution_id}', [InstitutionController::class, 'get_user_by_instutions'
     ]);
     Route::get('get_user_instution', [InstitutionController::class, 'getUserInstution'
