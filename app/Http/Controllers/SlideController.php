@@ -26,7 +26,8 @@ class SlideController extends Controller
      */
     public function store(StoreSlideRequest $request)
     {
-        //
+       
+       
     }
 
     /**

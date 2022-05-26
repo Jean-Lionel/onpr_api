@@ -15,7 +15,7 @@ class YoutubeMediaController extends Controller
      */
     public function index()
     {
-        return YoutubeMedia::latest()->paginate();
+        return YoutubeMedia::latest()->paginate(12);
     }
 
     /**

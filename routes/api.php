@@ -9,6 +9,7 @@ use App\Http\Controllers\OnlineDeclarationDetacheController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SlideController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\YoutubeMediaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,7 +27,9 @@ use Illuminate\Support\Facades\Route;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
-
+Route::apiResource('youtube_medias', YoutubeMediaController::class,[
+            'except' => ['store', 'destroy']
+        ]);
 Route::get("articles", [ArticleController::class, "index"]);
 Route::apiResource('youtube_medias', ArticleController::class,[
         'except' => ['index', 'show']
@@ -57,7 +60,7 @@ Route::middleware('auth:sanctum')->group(function () {
     ]);
     Route::get('get_user_instution', [InstitutionController::class, 'getUserInstution'
     ]);
-    Route::apiResource('youtube_medias', ArticleController::class,[
+    Route::apiResource('youtube_medias', YoutubeMediaController::class,[
             'except' => ['index', 'show']
         ]);
     Route::apiResource('declarations', DeclarationController::class);

@@ -13,7 +13,7 @@ class StoreSlideRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
