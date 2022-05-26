@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreDeclarationRequest;
 use App\Http\Requests\UpdateDeclarationRequest;
 use App\Models\Declaration;
+use App\Models\OnlineDeclarationDetache;
 use App\Models\UserReadMessage;
 
 class DeclarationController extends Controller
@@ -21,9 +22,12 @@ class DeclarationController extends Controller
 
     public function unReadDeclaration(){
 
-       $nombre =  Declaration::where('is_opened', 0)->get()->count();
+       $web_declaration =  Declaration::where('is_opened', 0)->get()->count();
+       $instution_declaration = OnlineDeclarationDetache::where('is_opened', 0)->get()->count();
+
        return response()->json([
-        "success" => $nombre
+        "web_declaration" => $web_declaration,
+        "instution_declaration" => $instution_declaration,
        ]);
     }
 

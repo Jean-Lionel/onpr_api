@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreOnlineDeclarationDetacheRequest;
 use App\Http\Requests\UpdateOnlineDeclarationDetacheRequest;
+use App\Models\DeclarationReadUser;
 use App\Models\OnlineDeclarationDetache;
 use App\Models\User;
 
@@ -17,7 +18,7 @@ class OnlineDeclarationDetacheController extends Controller
     public function index()
     {
         
-        return OnlineDeclarationDetache::latest()->paginate();
+        return OnlineDeclarationDetache::with('user')->latest()->paginate(10);
     }
 
     /**
@@ -87,9 +88,18 @@ class OnlineDeclarationDetacheController extends Controller
      */
     public function show(int $id)
     {
-       $declaration =  OnlineDeclarationDetache::find($id);
+        $declaration =  OnlineDeclarationDetache::find($id);
         $user = User::find($declaration->user_id)->first();
 
+        if(auth('sanctum')->user()->isAdmin()){
+            $declaration->is_opened = true;
+            $declaration->save();
+
+            DeclarationReadUser::create([
+                'user_id' => auth('sanctum')->user()->id,
+                'online_declaration_detache_id' => $declaration->id,
+            ]);
+        }
         return [
             'declaration' =>$declaration,
             'user' => $user ? $user->name : "INCONNUE",
