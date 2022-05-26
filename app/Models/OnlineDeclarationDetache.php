@@ -12,4 +12,15 @@ class OnlineDeclarationDetache extends Model
     use SoftDeletes;
 
     protected $guarded = [];
+
+   
+    public function getFileUploadedOneAttribute($v)
+    {
+        return asset('documents/declaration/'. $v);
+    }
+
+    public function getFileUploadedTwoAttribute($value)
+    {
+        return asset('documents/declaration/'.$value);
+    }
 }

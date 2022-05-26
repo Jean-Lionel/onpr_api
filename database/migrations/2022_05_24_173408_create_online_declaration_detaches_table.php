@@ -22,12 +22,12 @@ class CreateOnlineDeclarationDetachesTable extends Migration
             $table->string('annee');
             $table->date('date_declaration');
             $table->longText('description')->nullable();
-            $table->string('file_name_1')->nullable();
-            $table->string('file_uploaded_1');
-            $table->string('file_name_2')->nullable();
-            $table->string('file_uploaded_2')->nullable();
-            $table->string('file_name_3')->nullable();
-            $table->string('file_uploaded_3')->nullable();
+            $table->string('file_name_one')->nullable();
+            $table->string('file_uploaded_one');
+            $table->string('file_name_two')->nullable();
+            $table->string('file_uploaded_two')->nullable();
+            $table->string('file_name_three')->nullable();
+            $table->string('file_uploaded_three')->nullable();
             $table->foreignId('user_id');
             $table->foreignId('institution_id');
             $table->boolean('is_opened')->default(false);

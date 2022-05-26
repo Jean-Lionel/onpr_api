@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\OnlineDeclarationDetache;
 use App\Http\Requests\StoreOnlineDeclarationDetacheRequest;
 use App\Http\Requests\UpdateOnlineDeclarationDetacheRequest;
+use App\Models\OnlineDeclarationDetache;
+use App\Models\User;
 
 class OnlineDeclarationDetacheController extends Controller
 {
@@ -15,7 +16,8 @@ class OnlineDeclarationDetacheController extends Controller
      */
     public function index()
     {
-        //
+        
+        return OnlineDeclarationDetache::latest()->paginate();
     }
 
     /**
@@ -54,6 +56,7 @@ class OnlineDeclarationDetacheController extends Controller
            $request->file_uploaded_2->move(public_path('documents/declaration'), $file_name_2);
         }
 
+
         OnlineDeclarationDetache::create([
                 "titre" => $request->titre,
                 "code_instution" => $request->code_instution,
@@ -62,10 +65,10 @@ class OnlineDeclarationDetacheController extends Controller
                 "annee" => $request->annee,
                 "date_declaration" => $request->date_declaration,
                 "description" => $request->description,
-                "file_name_1" => $request->file_name_1,
-                "file_uploaded_1" => $file_name_1,
-                "file_name_2" => $request->file_name_2,
-                "file_uploaded_2" => $file_name_2,
+                "file_name_one" => $request->file_name_1,
+                "file_uploaded_one" => $file_name_1,
+                "file_name_two" => $request->file_name_2,
+                "file_uploaded_two" => $file_name_2,
                 "user_id" => auth('sanctum')->user()->id,
                 "institution_id" => $request->institution_id,
 
@@ -82,9 +85,15 @@ class OnlineDeclarationDetacheController extends Controller
      * @param  \App\Models\OnlineDeclarationDetache  $onlineDeclarationDetache
      * @return \Illuminate\Http\Response
      */
-    public function show(OnlineDeclarationDetache $onlineDeclarationDetache)
+    public function show(int $id)
     {
-        //
+       $declaration =  OnlineDeclarationDetache::find($id);
+        $user = User::find($declaration->user_id)->first();
+
+        return [
+            'declaration' =>$declaration,
+            'user' => $user ? $user->name : "INCONNUE",
+        ];
     }
 
     /**
