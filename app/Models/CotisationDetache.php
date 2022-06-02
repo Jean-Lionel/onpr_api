@@ -2,10 +2,18 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Institution;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class CotisationDetache extends Model
 {
     use HasFactory;
+
+    public function institution()
+    {
+        return $this->belongsTo(Institution::class);
+    }
+
+
 }

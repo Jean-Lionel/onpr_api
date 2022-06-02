@@ -16,7 +16,7 @@ class CotisationDetacheController extends Controller
      */
     public function index()
     {
-        return CotisationDetache::latest()->paginate(10);
+        return CotisationDetache::with("institution")->latest()->paginate(10);
     }
 
     public function searchByMatricule($matricule)

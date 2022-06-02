@@ -30,12 +30,16 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::apiResource('youtube_medias', YoutubeMediaController::class,[
             'except' => ['store', 'destroy']
         ]);
-Route::get("articles", [ArticleController::class, "index"]);
+
+ Route::apiResource('articles', ArticleController::class,[
+            'accept' => ['index', 'show']
+        ]);
+
 Route::apiResource('youtube_medias', ArticleController::class,[
         'except' => ['index', 'show']
     ]);
 Route::apiResource('slides', SlideController::class, [
-        'except' => ['index', 'show']
+        'accept' => ['index', 'show']
     ]);
 Route::get("/searchArticle/{key_word ?}", [ArticleController::class, 'search']);
 
@@ -72,6 +76,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get("unReadDeclaration", [DeclarationController::class, 'unReadDeclaration']);
 
     Route::apiResource('users', UserController::class);
+
+    Route::apiResource('cotisation_detaches', CotisationDetacheController::class);
     Route::apiResource('online_declaration_detaches', OnlineDeclarationDetacheController::class);
     Route::apiResource('cotisation_afiliers', CotisationAfilierController::class);
     Route::apiResource('institutions', InstitutionController::class);

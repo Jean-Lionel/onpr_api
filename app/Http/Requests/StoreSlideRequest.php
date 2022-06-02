@@ -25,6 +25,8 @@ class StoreSlideRequest extends FormRequest
     {
         return [
             //
+                "title" => "required",                
+                "image" => "required",
         ];
     }
 }

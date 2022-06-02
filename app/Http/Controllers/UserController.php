@@ -121,6 +121,15 @@ class UserController extends Controller
 
     }
 
+    public function foregetPassword(Request $request){
+        $email = $request->email;
+
+        $user = User::where('email', $email)->first();
+
+
+        
+    }
+
     
 
     /**
@@ -182,10 +191,6 @@ class UserController extends Controller
 
             'email' => 'required|email|unique:users,email,'.$id,
 
-            'password' => 'same:confirm-password',
-
-            'roles' => 'required'
-
         ]);
         
         $input = $request->all();
@@ -202,9 +207,7 @@ class UserController extends Controller
         $user = User::find($id);
 
         $user->update($input);
-        DB::table('model_has_roles')->where('model_id',$id)->delete();
-        $user->assignRole($request->input('roles'));
-
+        
        return response()->json([
         'success','User updated successfully'
        ]);

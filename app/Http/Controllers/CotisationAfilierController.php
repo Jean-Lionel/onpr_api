@@ -17,7 +17,7 @@ class CotisationAfilierController extends Controller
     public function index()
     {
         //
-        return CotisationAfilier::latest()->paginate(10);
+        return CotisationAfilier::with("institution")->latest()->paginate(10);
     }
 
     public function searchByMatricule($matricule)
