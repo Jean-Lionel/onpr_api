@@ -1,17 +1,19 @@
 <?php
-use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\ArticleController;
-use App\Http\Controllers\CotisationAfilierController;
-use App\Http\Controllers\CotisationDetacheController;
-use App\Http\Controllers\DeclarationController;
-use App\Http\Controllers\InstitutionController;
-use App\Http\Controllers\OnlineDeclarationDetacheController;
-use App\Http\Controllers\RoleController;
-use App\Http\Controllers\SlideController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\YoutubeMediaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\SlideController;
+use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\AdminHeaderController;
+use App\Http\Controllers\DeclarationController;
+use App\Http\Controllers\InstitutionController;
+use App\Http\Controllers\AdminContentController;
+use App\Http\Controllers\YoutubeMediaController;
+use App\Http\Controllers\CotisationAfilierController;
+use App\Http\Controllers\CotisationDetacheController;
+use App\Http\Controllers\OnlineDeclarationDetacheController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,6 +51,14 @@ Route::get("cotisation_detaches/{matricule}", [CotisationDetacheController::clas
 
 Route::post("declaration", [DeclarationController::class, 'store']);
 
+ Route::apiResource('adminheades', AdminHeaderController::class,[
+            'accept' => ['index', 'show']
+        ]);
+  Route::apiResource('admin_contents', AdminContentController::class,[
+            'accept' => ['index', 'show']
+        ]);
+
+
 Route::middleware('auth:sanctum')->group(function () {
     
     Route::get('/me',[AuthController::class, 'me']);
@@ -67,6 +77,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('get_user_instution', [InstitutionController::class, 'getUserInstution'
     ]);
     Route::apiResource('youtube_medias', YoutubeMediaController::class,[
+            'except' => ['index', 'show']
+        ]);
+    Route::apiResource('adminheades', AdminHeaderController::class,[
+            'except' => ['index', 'show']
+        ]);
+    Route::apiResource('admin_contents', AdminContentController::class,[
             'except' => ['index', 'show']
         ]);
     Route::apiResource('declarations', DeclarationController::class);

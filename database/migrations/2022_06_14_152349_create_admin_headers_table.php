@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDeclarationReadUsersTable extends Migration
+class CreateAdminHeadersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateDeclarationReadUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('declaration_read_users', function (Blueprint $table) {
+        Schema::create('admin_headers', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
             $table->foreignId('user_id');
-            $table->foreignId('online_declaration_detache_id');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -29,6 +29,6 @@ class CreateDeclarationReadUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('declaration_read_users');
+        Schema::dropIfExists('admin_headers');
     }
 }
