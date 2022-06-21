@@ -12,6 +12,7 @@ use App\Http\Controllers\InstitutionController;
 use App\Http\Controllers\AdminContentController;
 use App\Http\Controllers\DownloawdDocController;
 use App\Http\Controllers\YoutubeMediaController;
+use App\Http\Controllers\FileDeclarationController;
 use App\Http\Controllers\CotisationAfilierController;
 use App\Http\Controllers\CotisationDetacheController;
 use App\Http\Controllers\OnlineDeclarationDetacheController;
@@ -44,7 +45,9 @@ Route::apiResource('youtube_medias', ArticleController::class,[
 Route::apiResource('slides', SlideController::class, [
         'accept' => ['index', 'show']
     ]);
+Route::apiResource('file_declarations', FileDeclarationController::class);
 Route::get("/searchArticle/{key_word ?}", [ArticleController::class, 'search']);
+Route::get("/toutArticles", [ArticleController::class, 'toutArticles']);
 
 Route::get("cotisations_afiliers/{matricule}", [CotisationAfilierController::class, "searchByMatricule"]);
 

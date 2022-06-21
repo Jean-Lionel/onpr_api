@@ -16,6 +16,7 @@ class FileDeclarationController extends Controller
     public function index()
     {
         //
+
     }
 
     /**
@@ -27,6 +28,10 @@ class FileDeclarationController extends Controller
     public function store(StoreFileDeclarationRequest $request)
     {
         //
+        
+        return response()->json([
+            'success' => 'Enregistrment reussi'
+        ])
     }
 
     /**

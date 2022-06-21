@@ -16,6 +16,7 @@ class CreateFileDeclarationsTable extends Migration
         Schema::create('file_declarations', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('title');
             $table->foreignId('downloawd_doc_id');
             $table->timestamps();
         });

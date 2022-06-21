@@ -40,7 +40,11 @@ class ArticleController extends Controller
     public function index()
     {
 
-        return Article::latest()->paginate();
+        return Article::latest()->paginate(10);
+    }
+
+    public function toutArticles(){
+        return Article::latest()->get();
     }
 
     /**
@@ -105,6 +109,7 @@ class ArticleController extends Controller
             'body' => $request->body,
             'image' => $imageName ,           
             'image_alt' => $request->title,
+            'image_caption' => $request->image_caption,
 
         ]);
 

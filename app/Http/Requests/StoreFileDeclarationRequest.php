@@ -25,6 +25,9 @@ class StoreFileDeclarationRequest extends FormRequest
     {
         return [
             //
+            'name' => 'required',
+            'title' => 'title',
+            'downloawd_doc_id' => 'downloawd_doc_id',
         ];
     }
 }
