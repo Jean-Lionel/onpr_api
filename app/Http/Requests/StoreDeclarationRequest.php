@@ -29,7 +29,7 @@ class StoreDeclarationRequest extends FormRequest
             "telephone" => "required|min:8",
             "nom_declarant" => "required|min:6",
             "motif_declaration" => "required",
-            "date_declaration" => "required|date|before:today|after:2010-01-01",
+            "date_declaration" => "required|date|before:today",
             "victime_name" => "required",
             "victime_prenom" => "required",
             "file_name_1" => "required",

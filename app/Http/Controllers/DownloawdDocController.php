@@ -57,15 +57,15 @@ class DownloawdDocController extends Controller
      * @param  \App\Models\DownloawdDoc  $downloawdDoc
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateDownloawdDocRequest $request, DownloawdDoc $downloawdDoc)
+    public function update(UpdateDownloawdDocRequest $request,  $downloawdDoc)
     {
-        //
-        $downloawdDoc->update(
-            'title' => $request->title,
-        );
+      
+        DownloawdDoc::find($downloawdDoc)->update([
+            'title' => $request->title
+        ]);
 
          return response()->json([
-            'update' => 'created'
+            'update' => 'created '. $downloawdDoc   
         ]);
 
     }
@@ -76,10 +76,11 @@ class DownloawdDocController extends Controller
      * @param  \App\Models\DownloawdDoc  $downloawdDoc
      * @return \Illuminate\Http\Response
      */
-    public function destroy(DownloawdDoc $downloawdDoc)
+    public function destroy( $downloawdDoc)
     {
         //
-        $downloawdDoc->delete();
+        DownloawdDoc::find($downloawdDoc)->delete();
+        //$downloawdDoc->delete();
 
         return response()->json([
             'success' => 'deleted'

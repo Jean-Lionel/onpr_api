@@ -17,6 +17,12 @@ class OnlineDeclarationDetacheController extends Controller
      */
     public function index()
     {
+        $user = auth("sanctum")->user();
+
+        if(!$user->isAdmin()){
+            return OnlineDeclarationDetache::where('user_id', $user->id)->with('user')->latest()->paginate(10);
+
+        }
         
         return OnlineDeclarationDetache::with('user')->latest()->paginate(10);
     }

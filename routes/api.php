@@ -10,6 +10,7 @@ use App\Http\Controllers\AdminHeaderController;
 use App\Http\Controllers\DeclarationController;
 use App\Http\Controllers\InstitutionController;
 use App\Http\Controllers\AdminContentController;
+use App\Http\Controllers\DownloawdDocController;
 use App\Http\Controllers\YoutubeMediaController;
 use App\Http\Controllers\CotisationAfilierController;
 use App\Http\Controllers\CotisationDetacheController;
@@ -57,7 +58,9 @@ Route::post("declaration", [DeclarationController::class, 'store']);
   Route::apiResource('admin_contents', AdminContentController::class,[
             'accept' => ['index', 'show']
         ]);
-
+  Route::apiResource('downloawddoc', DownloawdDocController::class,[
+            'accept' => ['index', 'show']
+        ]);
 
 Route::middleware('auth:sanctum')->group(function () {
     
@@ -67,6 +70,9 @@ Route::middleware('auth:sanctum')->group(function () {
             'except' => ['index', 'show']
         ]);
     Route::apiResource('slides', SlideController::class,[
+            'except' => ['index', 'show']
+        ]);
+    Route::apiResource('downloawddoc', DownloawdDocController::class,[
             'except' => ['index', 'show']
         ]);
 
