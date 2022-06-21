@@ -28,10 +28,38 @@ class FileDeclarationController extends Controller
     public function store(StoreFileDeclarationRequest $request)
     {
         //
-        
+        if(!$request->hasFile("file")) {
+            return response()->json(['upload_file_not_found'], 400);
+        }
+
+        $imageName = '';
+
+        if (isset($request->file)) {
+            # code...
+            $file = $request->file("file"); 
+            $allowedfileExtension=['pdf','xls','xlsx'];
+            $extension = $file->getClientOriginalExtension();
+            $check = in_array($extension,$allowedfileExtension);
+            if (!$check) {
+            // code...
+                return response()->json(
+                    ['error' => 'Unknown extention type '], 400); 
+             }
+             $imageName = time() . '.'. $file->getClientOriginalExtension();
+
+             $destinationPath = public_path('/uploads/form');
+            $file->move($destinationPath, $imageName);
+         }
+
+         FileDeclaration::create([
+            'title' => $request->title,
+            'downloawd_doc_id' => $request->downloawd_doc_id,
+            'name' => $imageName
+         ]);
+
         return response()->json([
             'success' => 'Enregistrment reussi'
-        ])
+        ]);
     }
 
     /**
