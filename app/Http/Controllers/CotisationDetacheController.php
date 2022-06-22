@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CotisationDetache;
-use App\Http\Requests\StoreCotisationDetacheRequest;
 use Illuminate\Http\Request;
+use App\Models\CotisationDetache;
+use Illuminate\Support\Facades\DB;
+use App\Http\Requests\StoreCotisationDetacheRequest;
 use App\Http\Requests\UpdateCotisationDetacheRequest;
 
 class CotisationDetacheController extends Controller
@@ -30,26 +31,32 @@ class CotisationDetacheController extends Controller
 
 
     public function saveUploadData(Request $request){
-        $request->validate([
-            'institution_id' => 'required',
-        ]);
-       $user_id =  auth('sanctum')->user()->id ?? 0;
-       $institution_id = $request->institution_id;
+       
+          $body = json_decode($request->data, true);
 
-        $body = json_decode($request->data, true);
-        $user_id =  auth('sanctum')->user()->id ?? 0;
-        $body = collect($body)->map(function($ligne) use ($user_id, $institution_id){
-                $ligne['user_id'] = $user_id;
-                $ligne['institution_id'] = $institution_id;
-                return $ligne;
-            });
+          $trie_data = trimData($body);
 
-        CotisationDetache::insert($body->toArray());
+        $data = array_chunk($trie_data, 1000);
+        try {
+            DB::beginTransaction();
+            foreach($data as $v){
+                 CotisationDetache::insert($v);
+            }
+            DB::commit();
+            
+        } catch (Exception $e) {
+            
+            DB::rollback();
+
+            return response()->json($e->getMessage(), 500) ;
+        }
 
         return response()->json([
             "success" => "cotisation des detaches upploded successfully"
         ]);
     }
+
+    
 
     /**
      * Store a newly created resource in storage.

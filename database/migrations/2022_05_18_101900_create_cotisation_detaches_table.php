@@ -24,12 +24,11 @@ class CreateCotisationDetachesTable extends Migration
             $table->double('cotisation_employee', 64,2)->default(0);
             $table->double('salaire_base',64,2)->default(0);
             $table->double('points',64,2)->default(0);
-            $table->foreignId('user_id');
-            $table->foreignId('detache_id')->nullable();
-            $table->foreignId('institution_id')->nullable();
+            $table->foreignId('user_id')->nullable();
+            $table->foreignId('traitment')->nullable();
+      
             $table->timestamps();
             $table->softDeletes();
-            $table->unique(['matricule', 'mois', 'annee', 'salaire_base','points']);
         });
     }
 

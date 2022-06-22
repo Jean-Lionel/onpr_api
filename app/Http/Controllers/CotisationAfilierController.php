@@ -38,8 +38,9 @@ class CotisationAfilierController extends Controller
     public function saveUploadData(Request $request){
         $body = json_decode($request->data, true);
 
-        $data = array_chunk($body, 1000);
+       $trie_data =  trimData($body);
 
+        $data = array_chunk($trie_data, 1000);
         try {
             DB::beginTransaction();
             foreach($data as $v){
