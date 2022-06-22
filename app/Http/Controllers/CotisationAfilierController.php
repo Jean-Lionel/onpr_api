@@ -37,20 +37,20 @@ class CotisationAfilierController extends Controller
     public function saveUploadData(Request $request){
         $body = json_decode($request->data, true);
 
-        $request->validate([
-            'institution_id' => 'required',
-        ]);
-       $user_id =  auth('sanctum')->user()->id ?? 0;
-       $institution_id = $request->institution_id;
-        $body = collect($body)->map(function($ligne) use ($user_id, $institution_id){
-            $ligne['user_id'] = $user_id;
-            $ligne['institution_id'] = $institution_id;
+        $data = array_chunk($body, 1000);
 
-            return $ligne;
-        });
-        CotisationAfilier::insert($body->toArray());
+        try {
+            foreach($data as $v){
+                CotisationAfilier::insert($v);
+            }
+            
+        } catch (Exception $e) {
+            
+        }
 
-        return $body;
+        
+
+        return 'success';
     }
 
     /**

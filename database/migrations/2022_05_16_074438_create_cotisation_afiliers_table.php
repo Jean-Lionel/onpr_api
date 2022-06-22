@@ -24,7 +24,7 @@ class CreateCotisationAfiliersTable extends Migration
             $table->double('cotisation_employee', 64,2)->default(0);
             $table->double('salaire_base',64,2)->default(0);
             $table->double('points',64,2)->default(0);
-            $table->foreignId('user_id');
+            $table->foreignId('user_id')->nullable();
             $table->foreignId('afilier_id')->nullable();
             $table->foreignId('institution_id')->nullable();
             $table->timestamps();
