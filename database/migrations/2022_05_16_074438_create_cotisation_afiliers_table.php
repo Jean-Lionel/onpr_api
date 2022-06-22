@@ -29,6 +29,7 @@ class CreateCotisationAfiliersTable extends Migration
             $table->foreignId('institution_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
+            $table->unique(['matricule', 'mois', 'annee']);
         });
     }
 

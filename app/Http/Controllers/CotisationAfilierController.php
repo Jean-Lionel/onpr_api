@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\CotisationAfilier;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StoreCotisationAfilierRequest;
 use App\Http\Requests\UpdateCotisationAfilierRequest;
-use Illuminate\Http\Request;
 
 class CotisationAfilierController extends Controller
 {
@@ -40,12 +41,17 @@ class CotisationAfilierController extends Controller
         $data = array_chunk($body, 1000);
 
         try {
+            DB::beginTransaction();
             foreach($data as $v){
                 CotisationAfilier::insert($v);
             }
+            DB::commit();
             
         } catch (Exception $e) {
             
+            DB::rollback();
+
+            return $e;
         }
 
         
