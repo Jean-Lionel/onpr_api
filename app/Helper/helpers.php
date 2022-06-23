@@ -34,6 +34,7 @@ function direBonjour(){
                     'salaire_base' => intVal($value['salaire_base']),
                     'points' => intVal($value['points']),
                     'traitement' =>  $code_enregistrement,
+                    'created_at' =>  now(),
 
                 ];
             }

@@ -68,6 +68,8 @@ Route::post("declaration", [DeclarationController::class, 'store']);
 Route::middleware('auth:sanctum')->group(function () {
     
     Route::get('/me',[AuthController::class, 'me']);
+
+    Route::get('list_chargements', [ CotisationAfilierController::class, 'list_chargements']);
     // Route::post('/articles', [ArticleController::class, 'store']);
     Route::apiResource('articles', ArticleController::class,[
             'except' => ['index', 'show']

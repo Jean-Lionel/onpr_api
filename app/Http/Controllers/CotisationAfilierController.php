@@ -21,6 +21,16 @@ class CotisationAfilierController extends Controller
         return CotisationAfilier::with("institution")->latest()->paginate(10);
     }
 
+    public function list_chargements(){
+       $affilies =  DB::select('SELECT distinct traitement, created_at from cotisation_afiliers order by created_at DESC');
+       $detaches =  DB::select('SELECT distinct traitement, created_at from cotisation_detaches order by created_at DESC');
+
+       return [
+        'affilies' => $affilies,
+        'detaches' => $detaches,
+       ];
+    }
+
     public function searchByMatricule($matricule)
     {
 
