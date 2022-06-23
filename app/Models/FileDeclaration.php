@@ -9,4 +9,9 @@ class FileDeclaration extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
+   // public function name
+    public function getNameAttribute($v){
+        return asset('uploads/form'.$v);
+    }
 }

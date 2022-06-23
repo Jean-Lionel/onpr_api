@@ -71,9 +71,9 @@ class ArticleController extends Controller
 
     public function store(StoreArticleRequest $request)
     {
-        if(!$request->hasFile("image")) {
-            return response()->json(['upload_file_not_found'], 400);
-        }
+        // if(!$request->hasFile("image")) {
+        //     return response()->json(['upload_file_not_found'], 400);
+        // }
 
         $imageName = '';
         if (isset($request->image)) {

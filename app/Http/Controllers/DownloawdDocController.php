@@ -17,7 +17,7 @@ class DownloawdDocController extends Controller
     {
         //
 
-        return DownloawdDoc::all();
+        return DownloawdDoc::with('documents')->get();
     }
 
     /**
