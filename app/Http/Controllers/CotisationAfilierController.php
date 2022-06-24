@@ -22,8 +22,10 @@ class CotisationAfilierController extends Controller
     }
 
     public function list_chargements(){
-       $affilies =  DB::select('SELECT distinct traitement, created_at from cotisation_afiliers order by created_at DESC');
-       $detaches =  DB::select('SELECT distinct traitement, created_at from cotisation_detaches order by created_at DESC');
+       $affilies =  DB::select('SELECT  created_at, traitement,COUNT(*) AS total_ligne FROM cotisation_afiliers GROUP BY traitement, created_at ORDER BY created_at DESC');
+
+       
+       $detaches =  DB::select('SELECT  created_at, traitement,COUNT(*) AS total_ligne FROM cotisation_detaches GROUP BY traitement, created_at ORDER BY created_at DESC');
 
        return [
         'affilies' => $affilies,

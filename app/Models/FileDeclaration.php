@@ -12,6 +12,6 @@ class FileDeclaration extends Model
 
    // public function name
     public function getNameAttribute($v){
-        return asset('uploads/form'.$v);
+        return asset('uploads/form/'.$v);
     }
 }
