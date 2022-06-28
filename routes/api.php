@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SlideController;
+use App\Http\Controllers\AnnonceController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\AdminHeaderController;
@@ -64,6 +65,10 @@ Route::post("declaration", [DeclarationController::class, 'store']);
   Route::apiResource('downloawddoc', DownloawdDocController::class,[
             'accept' => ['index', 'show']
         ]);
+  Route::apiResource('annonces', AnnonceController::class,[
+            'accept' => ['index', 'show']
+        ]);
+
 
 Route::middleware('auth:sanctum')->group(function () {
     
@@ -78,6 +83,9 @@ Route::middleware('auth:sanctum')->group(function () {
             'except' => ['index', 'show']
         ]);
     Route::apiResource('downloawddoc', DownloawdDocController::class,[
+            'except' => ['index', 'show']
+        ]);
+    Route::apiResource('annonces', AnnonceController::class,[
             'except' => ['index', 'show']
         ]);
 
