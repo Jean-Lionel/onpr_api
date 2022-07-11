@@ -60,7 +60,23 @@ class User extends Authenticatable
     public function isAdmin(){
 
         return $this->role->name === 'ADMINISTRATEUR';
-    }
+    } 
+    public function isEmployeur(){
 
+        return $this->role->name === 'EMPLOYEUR';
+    }
+    public function isChefRecouvrement(){
+
+        return $this->role->name === 'CHEF RECOUVREMENT';
+    } 
+    public function isRisqueProfessionnel(){
+
+        return $this->role->name === 'RISQUE PROFESSIONELLE';
+    }    
+    public function isWebAdministrateur(){
+
+        return $this->role->name === 'ADMINISTRATEUR WEB';
+    }
+    
     
 }
