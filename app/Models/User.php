@@ -76,7 +76,5 @@ class User extends Authenticatable
     public function isWebAdministrateur(){
 
         return $this->role->name === 'ADMINISTRATEUR WEB';
-    }
-    
-    
+    } 
 }
