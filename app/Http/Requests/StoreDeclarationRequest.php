@@ -24,12 +24,12 @@ class StoreDeclarationRequest extends FormRequest
     public function rules()
     {
         return [
-            "nom_instution" => "required|min:3",
-            "adresse" => "required|min:5",
-            "telephone" => "required|min:8",
-            "nom_declarant" => "required|min:6",
+            "nom_instution" => "required|min:1",
+            "adresse" => "required|min:1",
+            "telephone" => "required|min:2",
+            "nom_declarant" => "required|min:1",
             "motif_declaration" => "required",
-            "date_declaration" => "required|date|before:today",
+            "date_declaration" => "required|date",
             "victime_name" => "required",
             "victime_prenom" => "required",
             "file_name_1" => "required",

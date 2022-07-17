@@ -25,7 +25,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
 
-        $data = User::with('role')->orderBy('id','DESC')->paginate(15);
+        $data = User::with('role')->orderBy('id','DESC')->paginate(10);
 
         /*return view('users.index',compact('data'))
 
@@ -125,9 +125,6 @@ class UserController extends Controller
         $email = $request->email;
 
         $user = User::where('email', $email)->first();
-
-
-        
     }
 
     

@@ -24,7 +24,7 @@ class DeclarationController extends Controller
 
        $web_declaration =  Declaration::where('is_opened', 0)->get()->count();
        $instution_declaration = OnlineDeclarationDetache::where('is_opened', 0)->get()->count();
-
+       
        return response()->json([
         "web_declaration" => $web_declaration,
         "instution_declaration" => $instution_declaration,

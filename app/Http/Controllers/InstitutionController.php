@@ -22,7 +22,7 @@ class InstitutionController extends Controller
 
     public function get_user_by_instutions($institution_id)
     {
-        $users = User::where('institution_id', $institution_id)->get();
+        $users = User::where('institution_id', '=',$institution_id)->get();
 
         return $users;
     }
@@ -108,6 +108,11 @@ class InstitutionController extends Controller
     public function update(UpdateInstitutionRequest $request, Institution $institution)
     {
         //
+        $institution->update($request->all());
+        
+        return response()->json([
+            "success" => "Created successfully"
+        ]);
     }
 
     /**
@@ -116,8 +121,13 @@ class InstitutionController extends Controller
      * @param  \App\Models\Institution  $institution
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Institution $institution)
+    public function destroy($institution)
     {
         //
+        Institution::find($institution)->delete();
+
+        return response()->json([
+            "success" => "Deleted successfully"
+        ]);
     }
 }
