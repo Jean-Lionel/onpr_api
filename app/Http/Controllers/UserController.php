@@ -26,14 +26,26 @@ class UserController extends Controller
     {
 
         $data = User::with('role')->orderBy('id','DESC')->paginate(10);
-
-        /*return view('users.index',compact('data'))
-
-            ->with('i', ($request->input('page', 1) - 1) * 5);*/
-
         return  $data;
-
     }
+
+     public function search($search_key){
+
+         //$search_key = $request->query('search_key');
+
+         if($search_key == 'ALL_DATA') return User::with('role')->orderBy('id','DESC')->paginate(10);
+
+        $users = User::where(function($query) use ($search_key){
+            if($search_key){
+                $query->where('name', 'like', '%'.$search_key . '%' )
+                  ->orWhere('email', 'like', '%'.$search_key. '%');
+            }
+        })->paginate(10);
+
+
+        return $users;
+    }
+
 
     
 

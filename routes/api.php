@@ -116,8 +116,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('online_declaration_detaches', OnlineDeclarationDetacheController::class);
     Route::apiResource('cotisation_afiliers', CotisationAfilierController::class);
     Route::apiResource('institutions', InstitutionController::class);
+    Route::post('cotisation_annuler/{traitement}/{table}', [CotisationAfilierController::class, 'annuler']);
     Route::get('institutions/groupby/{typeInstution}', [InstitutionController::class, 'groupby']);
-    Route::get('institutions/search/{search_key}', [InstitutionController::class, 'search']);
+    Route::get('institutions/search/{search_key}', [InstitutionController::class, 'search']);  
+    Route::get('users/search/{search_key}', [UserController::class, 'search']);
     Route::apiResource('roles', RoleController::class);
     Route::post('/logout', [AuthController::class, 'logout']);
 });

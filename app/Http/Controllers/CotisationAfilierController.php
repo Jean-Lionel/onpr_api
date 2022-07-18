@@ -33,6 +33,15 @@ class CotisationAfilierController extends Controller
        ];
     }
 
+    public function annuler($traitement, $table){
+
+        DB::statement("DELETE FROM $table WHERE traitement=$traitement");
+        return $traitement;
+
+        
+
+    }
+
     public function searchByMatricule($matricule)
     {
 
