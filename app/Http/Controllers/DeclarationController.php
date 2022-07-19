@@ -17,7 +17,7 @@ class DeclarationController extends Controller
      */
     public function index()
     {
-        return Declaration::latest()->paginate();
+        return Declaration::latest()->paginate(10);
     }
 
     public function unReadDeclaration(){
@@ -30,6 +30,35 @@ class DeclarationController extends Controller
         "instution_declaration" => $instution_declaration,
        ]);
     }
+
+    public function search($search_key){
+
+         //$search_key = $request->query('search_key');
+
+         if($search_key == 'ALL_DATA') return Declaration::latest()->paginate(10);
+
+        $institutions = Declaration::where(function($query) use ($search_key){
+            if($search_key){
+                $query->where('nom_instution', 'like', '%'.$search_key . '%' )
+                  ->orWhere('telephone', 'like', '%'.$search_key. '%')
+                  ->orWhere('email', 'like', '%'.$search_key. '%')
+                  ->orWhere('nom_declarant', 'like', '%'.$search_key. '%')
+                  ->orWhere('motif_declaration', 'like', '%'.$search_key. '%')
+                  ->orWhere('date_declaration', 'like', '%'.$search_key. '%')
+                  ->orWhere('victime_name', 'like', '%'.$search_key. '%')
+                  ->orWhere('victime_prenom', 'like', '%'.$search_key. '%')
+                  ->orWhere('victime_matricule', 'like', '%'.$search_key. '%')
+                  ->orWhere('victime_telephone', 'like', '%'.$search_key. '%')
+                  ->orWhere('victime_fonction', 'like', '%'.$search_key. '%');
+
+            }
+            
+        })->paginate(10);
+
+
+        return $institutions;
+    }
+
 
     /**
      * Store a newly created resource in storage.

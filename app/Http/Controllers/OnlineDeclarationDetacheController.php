@@ -17,13 +17,14 @@ class OnlineDeclarationDetacheController extends Controller
      */
     public function index()
     {
-        $user = auth("sanctum")->user();
+         //$user = auth("sanctum")->user();
 
-        if(!$user->isAdmin()){
-            return OnlineDeclarationDetache::where('user_id', $user->id)->with('user')->latest()->paginate(10);
 
-        }
-        
+        // if(!$user->isAdmin() && !$user->isRisqueProfessionnel() ){
+        //     return OnlineDeclarationDetache::where('user_id', $user->id)->with('user')->latest()->paginate(10);
+
+        // }
+
         return OnlineDeclarationDetache::with('user')->latest()->paginate(10);
     }
 
@@ -92,12 +93,20 @@ class OnlineDeclarationDetacheController extends Controller
      * @param  \App\Models\OnlineDeclarationDetache  $onlineDeclarationDetache
      * @return \Illuminate\Http\Response
      */
-    public function show(int $id)
+    public function show($id)
     {
         $declaration =  OnlineDeclarationDetache::find($id);
-        $user = User::find($declaration->user_id)->first();
 
-        if(auth('sanctum')->user()->isAdmin()){
+      // return $declaration;
+        $user = User::find($declaration->user_id);
+
+        if($user){
+           $user = $user->first(); 
+        }
+
+        
+
+        if(auth('sanctum')->user()->isAdmin() || auth('sanctum')->user()->isChefRecouvrement()){
             $declaration->is_opened = true;
             $declaration->save();
 
@@ -130,8 +139,12 @@ class OnlineDeclarationDetacheController extends Controller
      * @param  \App\Models\OnlineDeclarationDetache  $onlineDeclarationDetache
      * @return \Illuminate\Http\Response
      */
-    public function destroy(OnlineDeclarationDetache $onlineDeclarationDetache)
+    public function destroy( $onlineDeclarationDetache)
     {
         //
+        OnlineDeclarationDetache::find($onlineDeclarationDetache)->delete();
+        return response()->json([
+            "success" => "deleted successfully"
+        ]);
     }
 }

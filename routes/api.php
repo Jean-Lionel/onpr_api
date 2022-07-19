@@ -105,6 +105,8 @@ Route::middleware('auth:sanctum')->group(function () {
             'except' => ['index', 'show']
         ]);
     Route::apiResource('declarations', DeclarationController::class);
+    Route::get('declarations/search/{search_key}', [DeclarationController::class, 'search']); 
+
     Route::post('/cotisations', [CotisationAfilierController::class, 'saveUploadData']);
     Route::post('/cotisations_detaches', [CotisationDetacheController::class, 'saveUploadData']);
 
