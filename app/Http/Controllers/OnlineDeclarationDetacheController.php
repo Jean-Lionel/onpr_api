@@ -17,13 +17,13 @@ class OnlineDeclarationDetacheController extends Controller
      */
     public function index()
     {
-         //$user = auth("sanctum")->user();
+         $user = auth("sanctum")->user();
 
 
-        // if(!$user->isAdmin() && !$user->isRisqueProfessionnel() ){
-        //     return OnlineDeclarationDetache::where('user_id', $user->id)->with('user')->latest()->paginate(10);
+        if(!$user->isAdmin() && !$user->isChefRecouvrement() ){
+            return OnlineDeclarationDetache::where('user_id', $user->id)->with('user')->latest()->paginate(10);
 
-        // }
+        }
 
         return OnlineDeclarationDetache::with('user')->latest()->paginate(10);
     }
