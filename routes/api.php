@@ -29,48 +29,46 @@ use App\Http\Controllers\OnlineDeclarationDetacheController;
 |
 */
 
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('/register', [AuthController::class, 'register'])->middleware('cors');
+Route::post('/login', [AuthController::class, 'login'])->middleware('cors');
 
 Route::apiResource('youtube_medias', YoutubeMediaController::class,[
             'except' => ['store', 'destroy']
-        ]);
+        ])->middleware('cors');
 
  Route::apiResource('articles', ArticleController::class,[
             'accept' => ['index', 'show']
-        ]);
+        ])->middleware('cors');
 
 Route::apiResource('youtube_medias', ArticleController::class,[
         'except' => ['index', 'show']
-    ]);
+    ])->middleware('cors');
 Route::apiResource('slides', SlideController::class, [
         'accept' => ['index', 'show']
-    ]);
-Route::apiResource('file_declarations', FileDeclarationController::class);
-Route::get("/searchArticle/{key_word ?}", [ArticleController::class, 'search']);
-Route::get("/toutArticles", [ArticleController::class, 'toutArticles']);
+    ])->middleware('cors');
+Route::apiResource('file_declarations', FileDeclarationController::class)->middleware('cors');
+Route::get("/searchArticle/{key_word ?}", [ArticleController::class, 'search'])->middleware('cors');
+Route::get("/toutArticles", [ArticleController::class, 'toutArticles'])->middleware('cors');
 
-Route::get("cotisations_afiliers/{matricule}", [CotisationAfilierController::class, "searchByMatricule"]);
+Route::get("cotisations_afiliers/{matricule}", [CotisationAfilierController::class, "searchByMatricule"])->middleware('cors');
 
-Route::get("cotisation_detaches/{matricule}", [CotisationDetacheController::class, "searchByMatricule"]);
+Route::get("cotisation_detaches/{matricule}", [CotisationDetacheController::class, "searchByMatricule"])->middleware('cors');
 
-Route::post("declaration", [DeclarationController::class, 'store']);
+Route::post("declaration", [DeclarationController::class, 'store'])->middleware('cors');
 
  Route::apiResource('adminheades', AdminHeaderController::class,[
             'accept' => ['index', 'show']
-        ]);
-  Route::apiResource('admin_contents', AdminContentController::class,[
+        ])->middleware('cors');
+    Route::apiResource('admin_contents', AdminContentController::class,[
             'accept' => ['index', 'show']
-        ]);
-  Route::apiResource('downloawddoc', DownloawdDocController::class,[
+        ])->middleware('cors');
+     Route::apiResource('downloawddoc', DownloawdDocController::class,[
             'accept' => ['index', 'show']
-        ]);
-  Route::apiResource('annonces', AnnonceController::class,[
+        ])->middleware('cors');
+     Route::apiResource('annonces', AnnonceController::class,[
             'accept' => ['index', 'show']
-        ]);
-
-
-Route::middleware('auth:sanctum')->group(function () {
+        ])->middleware('cors');
+    Route::middleware(['auth:sanctum','cors'])->group(function () {
     
     Route::get('/me',[AuthController::class, 'me']);
 

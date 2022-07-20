@@ -25,7 +25,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
 
-        $data = User::with('role')->orderBy('id','DESC')->paginate(10);
+        $data = User::with('role')->orderBy('id','DESC')->paginate(20);
         return  $data;
     }
 
@@ -33,14 +33,14 @@ class UserController extends Controller
 
          //$search_key = $request->query('search_key');
 
-         if($search_key == 'ALL_DATA') return User::with('role')->orderBy('id','DESC')->paginate(10);
+         if($search_key == 'ALL_DATA') return User::with('role')->orderBy('id','DESC')->paginate(20);
 
         $users = User::where(function($query) use ($search_key){
             if($search_key){
                 $query->where('name', 'like', '%'.$search_key . '%' )
                   ->orWhere('email', 'like', '%'.$search_key. '%');
             }
-        })->paginate(10);
+        })->paginate(20);
 
 
         return $users;
