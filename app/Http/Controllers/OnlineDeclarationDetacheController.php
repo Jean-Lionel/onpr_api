@@ -95,14 +95,16 @@ class OnlineDeclarationDetacheController extends Controller
      */
     public function show($id)
     {
+
+        //return OnlineDeclarationDetache::find($id);
         $declaration =  OnlineDeclarationDetache::find($id);
 
       // return $declaration;
         $user = User::find($declaration->user_id);
 
-        if($user){
-           $user = $user->first(); 
-        }
+        // if($user){
+        //    $user = $user->first(); 
+        // }
 
         
 
@@ -117,7 +119,7 @@ class OnlineDeclarationDetacheController extends Controller
         }
         return [
             'declaration' =>$declaration,
-            'user' => $user ? $user->name : "INCONNUE",
+            'user' => $user ?  : "INCONNUE",
         ];
     }
 
