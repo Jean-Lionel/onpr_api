@@ -30,6 +30,7 @@ function direBonjour(){
                     'matricule' => $value['matricule'],
                     'nom' => $value['nom'],
                     'annee' => intVal($value['annee']),
+                    'cotisation_employee' => intVal($value['cotisation_employee']),
                     'mois' => intVal($value['mois']),
                     'salaire_base' => intVal($value['salaire_base']),
                     'points' => intVal($value['points']),

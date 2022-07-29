@@ -61,7 +61,7 @@ class CotisationAfilierController extends Controller
 
        $trie_data =  trimData($body);
 
-        $data = array_chunk($trie_data, 1000);
+        $data = array_chunk($trie_data, 7000);
         try {
             DB::beginTransaction();
             foreach($data as $v){
