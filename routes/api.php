@@ -1,7 +1,8 @@
 <?php
+header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
 header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token, Authorization, Accept,charset,boundary,Content-Length');
-header('Access-Control-Allow-Origin: *');
+
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -34,9 +35,6 @@ use App\Http\Controllers\OnlineDeclarationDetacheController;
 */
 
 
-
-
-
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 Route::apiResource('youtube_medias', YoutubeMediaController::class,[
@@ -61,7 +59,7 @@ Route::get("cotisations_afiliers/{matricule}", [CotisationAfilierController::cla
 
 Route::get("cotisation_detaches/{matricule}", [CotisationDetacheController::class, "searchByMatricule"]);
 
-Route::post("declaration", [DeclarationController::class, 'store']);
+//Route::apiResource("declaration", [DeclarationController::class, 'store']);
 
  Route::apiResource('adminheades', AdminHeaderController::class,[
             'accept' => ['index', 'show']
@@ -75,6 +73,8 @@ Route::post("declaration", [DeclarationController::class, 'store']);
      Route::apiResource('annonces', AnnonceController::class,[
             'accept' => ['index', 'show']
         ]);
+     Route::apiResource('declarations', DeclarationController::class);
+    // =========================================================
     Route::middleware(['auth:sanctum'])->group(function () {
     
     Route::get('me',[AuthController::class, 'me']);
@@ -107,7 +107,7 @@ Route::post("declaration", [DeclarationController::class, 'store']);
     Route::apiResource('admin_contents', AdminContentController::class,[
             'except' => ['index', 'show']
         ]);
-    Route::apiResource('declarations', DeclarationController::class);
+    
     Route::get('declarations/search/{search_key}', [DeclarationController::class, 'search']); 
     Route::post('cotisations', [CotisationAfilierController::class, 'saveUploadData']);
     Route::post('cotisations_detaches', [CotisationDetacheController::class, 'saveUploadData']);
