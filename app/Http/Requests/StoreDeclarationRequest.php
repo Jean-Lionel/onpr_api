@@ -33,7 +33,7 @@ class StoreDeclarationRequest extends FormRequest
             "victime_name" => "required",
             "victime_prenom" => "required",
             "file_name_1" => "required",
-            'file_justification_1' => 'required|mimes:pdf',
+            'file_justification_1' => 'required',
             // 'file_justification_2' => 'mimes:pdf|max:2048',
             // 'file_justification_3' => 'mimes:pdf|max:2048',
         ];
