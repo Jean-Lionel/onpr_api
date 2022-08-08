@@ -53,7 +53,6 @@ Route::apiResource('slides', SlideController::class, [
     ]);
 Route::apiResource('file_declarations', FileDeclarationController::class);
 Route::get("searchArticle/{key_word ?}", [ArticleController::class, 'search']);
-Route::get("Translator_art", [ArticleController::class, 'articleTranslater']);
 Route::get("toutArticles", [ArticleController::class, 'toutArticles']);
 
 Route::get("cotisations_afiliers/{matricule}", [CotisationAfilierController::class, "searchByMatricule"]);
@@ -74,8 +73,6 @@ Route::get("cotisation_detaches/{matricule}", [CotisationDetacheController::clas
      Route::apiResource('annonces', AnnonceController::class,[
             'accept' => ['index', 'show']
         ]);
-     Route::get("Translator_annon", [AnnonceController::class, 'annonceTranslater']);
-     
      Route::apiResource('declarations', DeclarationController::class);
     // =========================================================
     Route::middleware(['auth:sanctum'])->group(function () {

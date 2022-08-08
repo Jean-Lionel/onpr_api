@@ -7,7 +7,9 @@ use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
 use App\Models\Article;
 use Illuminate\Http\Request;
+use Stichoza\GoogleTranslate\GoogleTranslate;
 use Image;
+use GuzzleHttp\Exception\ConnectException;
 
 class ArticleController extends Controller
 {
@@ -37,14 +39,28 @@ class ArticleController extends Controller
      *     )
      */
 
-    public function index()
-    {
-
+    public function index(){   
         return Article::latest()->paginate(10);
     }
 
     public function toutArticles(){
         return Article::latest()->get();
+    }
+
+    public function articleTranslater(Request $request){
+        
+        if(!empty($request->body)){
+            $Error = 'Erreur de connexion';
+            $tr = new GoogleTranslate();
+            try {
+                return $tr->setSource('fr')->setTarget('en')->translate($request->body);
+            } catch(ConnectException $e){
+                return $Error;
+             }
+        }else{
+            return 'Please, add some text to translate';
+        }
+       
     }
 
     /**
@@ -103,11 +119,14 @@ class ArticleController extends Controller
             // $destinationPath = public_path('/uploads');
             // $image->move($destinationPath, $imageName);
         }
-
+        
+        $tr = new GoogleTranslate(); // Translates into English
         $article = Article::create([
             'title' => $request->title,
+            'title_en' => $tr->setSource('fr')->setTarget('en')->translate($request->title) ?? $request->title,
             'body' => $request->body,
-            'image' => $imageName ,           
+            'body_en'=> $request->body_en ?? $tr->setSource('fr')->setTarget('en')->translate('Bonjour je suis le premier article'),
+            'image' => $imageName,           
             'image_alt' => $request->title,
             'image_caption' => $request->image_caption,
 

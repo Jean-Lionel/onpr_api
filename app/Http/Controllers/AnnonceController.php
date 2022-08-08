@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Annonce;
 use App\Http\Requests\StoreAnnonceRequest;
 use App\Http\Requests\UpdateAnnonceRequest;
+use Stichoza\GoogleTranslate\GoogleTranslate;
+use GuzzleHttp\Exception\ConnectException;
 
 class AnnonceController extends Controller
 {
@@ -16,8 +18,22 @@ class AnnonceController extends Controller
     public function index()
     {
         //
-
         return Annonce::latest()->paginate();
+    }
+
+    public function annonceTranslater(Request $request){
+        
+        if (!empty($request->body)) {
+            $Error = 'Erreur de connexion';
+            $tr = new GoogleTranslate();
+            try {
+                return $tr->setSource('fr')->setTarget('en')->translate($request->body);
+            } catch(ConnectException $e){
+                return $ErrorConnection;
+            }
+        }else{
+            return 'Please, add some text to translate';
+        }
     }
 
     /**
@@ -27,10 +43,13 @@ class AnnonceController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(StoreAnnonceRequest $request)
-    {
+    {   
+        $tr = new GoogleTranslate(); // Translates into English
         Annonce::create([
             'body' =>  $request->body,
+            'body_en'=> $request->body_en ?? $tr->setSource('fr')->setTarget('en')->translate('Bonjour je suis le premier article'),
             'title' =>  $request->title,
+            'title_en' => $tr->setSource('fr')->setTarget('en')->translate($request->title) ?? $request->title,
             'user_id' =>  auth('sanctum')->user()->id,
         ]);
 
@@ -60,10 +79,12 @@ class AnnonceController extends Controller
      */
     public function update(UpdateAnnonceRequest $request, Annonce $annonce)
     {
-        //
+        $tr = new GoogleTranslate(); // Translates into English
          $annonce->update([
             'body' =>  $request->body,
+            'body_en'=> $request->body_en ?? $tr->setSource('fr')->setTarget('en')->translate($request->body),
             'title' =>  $request->title,
+            'title_en' =>$tr->setSource('fr')->setTarget('en')->translate($request->title) ?? $request->title,
             'user_id' =>  auth('sanctum')->user()->id,
         ]);
 
@@ -80,12 +101,9 @@ class AnnonceController extends Controller
      */
     public function destroy( $annonce)
     {
-        //
-
         Annonce::find($annonce)->delete();
         return response()->json([
             'success' => 'deleted'
         ]);
-
     }
 }
