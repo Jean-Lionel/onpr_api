@@ -88,29 +88,40 @@ class DeclarationController extends Controller
         $request->file_justification_3 = $file_name_3;
 
 
-    Declaration::create([
-        'file_name_3' => $request->file_name_3,
-        'file_name_2' => $request->file_name_2,
-        'file_name_1' => $request->file_name_1,
-        'victime_telephone' => $request->victime_telephone,
-        'victime_matricule' => $request->victime_matricule,
-        'type_declaration' => $request->type_declaration,
-        'victime_prenom' => $request->victime_prenom,
-        'nom_instution' => $request->nom_instution,
-        'adresse' => $request->adresse,
-        'telephone' => $request->telephone,
-        'email' => $request->email,
-        'nom_declarant' => $request->nom_declarant,
-        'motif_declaration' => $request->motif_declaration,
-        'date_declaration' => $request->date_declaration,
-        'victime_name' => $request->victime_name,
-        'file_justification_1' => $file_name_1,
-        'file_justification_2' => $file_name_2,
-        'file_justification_3' => $file_name_3,
-    ]);
+        try {
+             Declaration::create([
+                'file_name_3' => $request->file_name_3,
+                'file_name_2' => $request->file_name_2,
+                'file_name_1' => $request->file_name_1,
+                'victime_telephone' => $request->victime_telephone,
+                'victime_matricule' => $request->victime_matricule,
+                'type_declaration' => $request->type_declaration,
+                'victime_prenom' => $request->victime_prenom,
+                'nom_instution' => $request->nom_instution,
+                'adresse' => $request->adresse,
+                'telephone' => $request->telephone,
+                'email' => $request->email,
+                'nom_declarant' => $request->nom_declarant,
+                'motif_declaration' => $request->motif_declaration,
+                'date_declaration' => $request->date_declaration,
+                'victime_name' => $request->victime_name,
+                'file_justification_1' => $file_name_1,
+                'file_justification_2' => $file_name_2,
+                'file_justification_3' => $file_name_3,
+            ]);
+            
+        } catch (\Exception $e) {
+            return response()->json([
+                "success" => false, 
+                "msg" => $e->getMessage(),
+         ]);
+            
+        }
+
 
     return response()->json([
-        "success" => "Déclaration created successfully"
+        "success" => true, 
+        "msg" => "Déclaration created successfully"
     ]);
 }
 

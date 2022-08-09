@@ -1,5 +1,7 @@
 <?php  
 
+use Stichoza\GoogleTranslate\GoogleTranslate;
+
 function direBonjour(){
 
 	$startTime = time();
@@ -43,4 +45,21 @@ function direBonjour(){
 
         return $trim;
 
+    }
+
+// Methode pour la traduction Automatique de Google 
+function articleTranslater($message){
+        
+        if(!empty($message)){
+            $Error = 'Erreur de connexion';
+            $tr = new GoogleTranslate();
+            try {
+                return $tr->setSource('fr')->setTarget('en')->translate($message);
+            } catch(ConnectException $e){
+                return $Error;
+             }
+        }else{
+            return 'Please, add some text to translate';
+        }
+       
     }

@@ -125,7 +125,7 @@ class ArticleController extends Controller
             'title' => $request->title,
             'title_en' => $tr->setSource('fr')->setTarget('en')->translate($request->title) ?? $request->title,
             'body' => $request->body,
-            'body_en'=> $request->body_en ?? $tr->setSource('fr')->setTarget('en')->translate('Bonjour je suis le premier article'),
+            'body_en'=> $request->body_en ?? $tr->setSource('fr')->setTarget('en')->translate($request->body),
             'image' => $imageName,           
             'image_alt' => $request->title,
             'image_caption' => $request->image_caption,
