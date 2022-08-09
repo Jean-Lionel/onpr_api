@@ -48,6 +48,8 @@ function direBonjour(){
     }
 
 // Methode pour la traduction Automatique de Google 
+// body
+// body_en
 function articleTranslater($message){
         
         if(!empty($message)){
