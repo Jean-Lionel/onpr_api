@@ -29,7 +29,9 @@ class AdminContentController extends Controller
     {
         AdminContent::create([
             'title' => $request->title,
+            'title_en' =>  $request->title_en ?? articleTranslater($request->title),
             'description' => $request->description,
+            'description_en' => $request->description_en ?? articleTranslater($request->description),
             'admin_header_id' => $request->admin_header_id,
             'user_id' => auth('sanctum')->user()->id,  
         ]);
@@ -62,7 +64,9 @@ class AdminContentController extends Controller
     {
         $adminContent->update([
             'title' => $request->title,
+            'title_en' => $request->title_en ??  articleTranslater($request->title),
             'description' => $request->description,
+            'description_en' => $request->description_en ??  articleTranslater($request->description),
              
         ]);
 

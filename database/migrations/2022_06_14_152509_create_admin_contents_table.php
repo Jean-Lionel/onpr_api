@@ -16,7 +16,8 @@ class CreateAdminContentsTable extends Migration
         Schema::create('admin_contents', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->text('description');
+            $table->string('title_en')->nullable();
+            $table->text('description_en')->nullable();
             $table->foreignId('admin_header_id');
             $table->foreignId('user_id');
             $table->timestamps();

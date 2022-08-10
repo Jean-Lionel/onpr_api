@@ -29,6 +29,7 @@ class AdminHeaderController extends Controller
     {
         $a = AdminHeader::create([
             'title' => $request->title,
+            'title_en' => $request->title_en ??  articleTranslater($request->title),
             'user_id' => auth('sanctum')->user()->id ?? 0
         ]);
 
@@ -61,6 +62,7 @@ class AdminHeaderController extends Controller
     {
         $adminHeader->update([
             'title' => $request->title,
+            'title_en' => $request->title_en ?? articleTranslater($request->title),
             'user_id' => auth('sanctum')->user()->id ?? 0
         ]);
 

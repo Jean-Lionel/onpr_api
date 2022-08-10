@@ -16,6 +16,7 @@ class CreateYoutubeMediaTable extends Migration
         Schema::create('youtube_media', function (Blueprint $table) {
             $table->id();
             $table->text('youtube_title')->nullable();
+            $table->text('youtube_title_en')->nullable();
             $table->longText('youtube_media');
             $table->foreignId("user_id");
             $table->timestamps();

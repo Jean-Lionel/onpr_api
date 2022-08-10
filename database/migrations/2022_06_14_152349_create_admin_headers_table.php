@@ -16,6 +16,7 @@ class CreateAdminHeadersTable extends Migration
         Schema::create('admin_headers', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->string('title_en')->nullable();
             $table->foreignId('user_id');
             $table->timestamps();
             $table->softDeletes();

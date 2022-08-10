@@ -47,9 +47,9 @@ class AnnonceController extends Controller
         $tr = new GoogleTranslate(); // Translates into English
         Annonce::create([
             'body' =>  $request->body,
-            'body_en'=> $request->body_en ?? $tr->setSource('fr')->setTarget('en')->translate('Bonjour je suis le premier article'),
+            'body_en'=> $request->body_en ?? articleTranslater($request->body),
             'title' =>  $request->title,
-            'title_en' => $tr->setSource('fr')->setTarget('en')->translate($request->title) ?? $request->title,
+            'title_en' =>$request->title_en ?? articleTranslater($request->title),
             'user_id' =>  auth('sanctum')->user()->id,
         ]);
 
@@ -84,7 +84,7 @@ class AnnonceController extends Controller
             'body' =>  $request->body,
             'body_en'=> $request->body_en ?? $tr->setSource('fr')->setTarget('en')->translate($request->body),
             'title' =>  $request->title,
-            'title_en' =>$tr->setSource('fr')->setTarget('en')->translate($request->title) ?? $request->title,
+            'title_en' =>$request->title_en ?? articleTranslater($request->title),
             'user_id' =>  auth('sanctum')->user()->id,
         ]);
 
