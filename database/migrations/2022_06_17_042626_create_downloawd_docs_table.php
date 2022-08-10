@@ -16,6 +16,7 @@ class CreateDownloawdDocsTable extends Migration
         Schema::create('downloawd_docs', function (Blueprint $table) {
             $table->id();
             $table->string("title");
+            $table->string("title_en")->nullable();
             $table->timestamps();
         });
     }
