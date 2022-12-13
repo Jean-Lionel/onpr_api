@@ -14,6 +14,7 @@ use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\AdminHeaderController;
 use App\Http\Controllers\DeclarationController;
+use App\Http\Controllers\InformationController;
 use App\Http\Controllers\InstitutionController;
 use App\Http\Controllers\AdminContentController;
 use App\Http\Controllers\DownloawdDocController;
@@ -107,6 +108,7 @@ Route::get("cotisation_detaches/{matricule}", [CotisationDetacheController::clas
     Route::apiResource('adminheades', AdminHeaderController::class,[
             'except' => ['index', 'show']
         ]);
+    Route::post('adminheadesTraduction', [AdminHeaderController::class, "adminheadesTraduction"]);
     Route::apiResource('admin_contents', AdminContentController::class,[
             'except' => ['index', 'show']
         ]);
@@ -125,6 +127,7 @@ Route::get("cotisation_detaches/{matricule}", [CotisationDetacheController::clas
     Route::get('institutions/search/{search_key}', [InstitutionController::class, 'search']);  
     Route::get('users/search/{search_key}', [UserController::class, 'search']);
     Route::apiResource('roles', RoleController::class);
+    Route::apiResource('informations', InformationController::class);
     Route::post('logout', [AuthController::class, 'logout']);
 });
 

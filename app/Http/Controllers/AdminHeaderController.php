@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\AdminHeader;
+use Illuminate\Http\Request;
 use App\Http\Requests\StoreAdminHeaderRequest;
 use App\Http\Requests\UpdateAdminHeaderRequest;
 
@@ -17,6 +18,17 @@ class AdminHeaderController extends Controller
     {
         
         return AdminHeader::with("admin_contents")->get();
+    }
+
+    public function adminheadesTraduction(Request $request){
+
+        $element = AdminHeader::find($request->element_id);
+
+        $element->title_en = $request->title_en;
+        $element->save();
+
+        return  $element;
+
     }
 
     /**
