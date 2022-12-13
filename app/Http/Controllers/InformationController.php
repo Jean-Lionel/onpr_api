@@ -16,6 +16,8 @@ class InformationController extends Controller
     public function index()
     {
         //
+
+        return Information::latest()->first();
     }
 
     /**
@@ -27,6 +29,10 @@ class InformationController extends Controller
     public function store(StoreInformationRequest $request)
     {
         //
+
+        $info = Information::create(all(), $request->all());
+
+        return  $info;
     }
 
     /**
@@ -38,6 +44,7 @@ class InformationController extends Controller
     public function show(Information $information)
     {
         //
+        return $information;
     }
 
     /**
