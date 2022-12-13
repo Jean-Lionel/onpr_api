@@ -40,7 +40,7 @@ class ArticleController extends Controller
      */
 
     public function index(){   
-        return Article::latest()->paginate(10);
+        return Article::latest()->paginate(4);
     }
 
     public function toutArticles(){
@@ -109,7 +109,7 @@ class ArticleController extends Controller
 
             $imageName = time() . '.'. $image->getClientOriginalExtension();
 
-            $destinationPath  = public_path('img\articles');
+            $destinationPath  = public_path('img/articles');
             $imageFile = Image::make($image->getRealPath());
 
             $imageFile->resize(400,600,function($constraint){
@@ -156,13 +156,21 @@ class ArticleController extends Controller
     }
 
 
-    public function update(UpdateArticleRequest $request, Article $article)
+    public function update(Request $request,  $id)
     {
-        $article->update($request->all());
+
+        
+        $article = Article::find($id);
+
+        $article->update([
+            'title_en' => $request->title_en,
+            'body_en' => $request->body_en,
+        ]);
 
         return response()->json([
             "success" => "update successfully",
-            "article" => $article
+            "article" => $article,
+            
         ],200);
     }
 

@@ -77,14 +77,14 @@ class AnnonceController extends Controller
      * @param  \App\Models\Annonce  $annonce
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateAnnonceRequest $request, Annonce $annonce)
+    public function update(UpdateAnnonceRequest $request,  $id)
     {
-        $tr = new GoogleTranslate(); // Translates into English
+        // Translates into English
+
+        $annonce = Annonce::find($id);
          $annonce->update([
-            'body' =>  $request->body,
-            'body_en'=> $request->body_en ?? $tr->setSource('fr')->setTarget('en')->translate($request->body),
-            'title' =>  $request->title,
-            'title_en' =>$request->title_en ?? articleTranslater($request->title),
+            'body_en'=> $request->body,
+            'title_en' =>$request->title,
             'user_id' =>  auth('sanctum')->user()->id,
         ]);
 
