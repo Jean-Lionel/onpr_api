@@ -112,6 +112,7 @@ Route::get("cotisation_detaches/{matricule}", [CotisationDetacheController::clas
     Route::apiResource('admin_contents', AdminContentController::class,[
             'except' => ['index', 'show']
         ]);
+    Route::post("admin_contents_translate", [AdminContentController::class, "admin_contents_translate"]);
     
     Route::get('declarations/search/{search_key}', [DeclarationController::class, 'search']); 
     Route::post('cotisations', [CotisationAfilierController::class, 'saveUploadData']);

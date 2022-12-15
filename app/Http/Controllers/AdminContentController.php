@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\AdminContent;
+use Illuminate\Http\Request;
 use App\Http\Requests\StoreAdminContentRequest;
 use App\Http\Requests\UpdateAdminContentRequest;
 
@@ -17,6 +18,11 @@ class AdminContentController extends Controller
     {
         //
         return AdminContent::all();
+    }
+
+    public function admin_contents_translate(Request $request){
+
+        return $request->all();
     }
 
     /**
