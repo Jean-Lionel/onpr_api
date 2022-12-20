@@ -66,5 +66,8 @@ class InformationController extends Controller
     public function destroy(Information $information)
     {
         //
+        $information->delete();
+
+        return "Information deleted";
     }
 }
