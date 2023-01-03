@@ -16,7 +16,7 @@ class InformationController extends Controller
     public function index()
     {
         //
-        return Information::latest()->first();
+        return Information::latest()->paginate(10);
     }
 
     /**

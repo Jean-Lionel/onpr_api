@@ -22,7 +22,11 @@ class AdminContentController extends Controller
 
     public function admin_contents_translate(Request $request){
 
-        return $request->all();
+        $el = AdminContent::find($request->element_id);
+
+        $el->title_en = $request->content_en;
+        $el->save();
+        return  $el;
     }
 
     /**

@@ -128,10 +128,11 @@ Route::get("cotisation_detaches/{matricule}", [CotisationDetacheController::clas
     Route::get('institutions/search/{search_key}', [InstitutionController::class, 'search']);  
     Route::get('users/search/{search_key}', [UserController::class, 'search']);
     Route::apiResource('roles', RoleController::class);
-    Route::apiResource('informations', InformationController::class);
+   
     Route::post('logout', [AuthController::class, 'logout']);
 });
-
+ Route::apiResource('informations', InformationController::class);
+ 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });

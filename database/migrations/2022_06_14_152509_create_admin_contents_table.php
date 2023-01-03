@@ -17,6 +17,7 @@ class CreateAdminContentsTable extends Migration
             $table->id();
             $table->string('title');
             $table->string('title_en')->nullable();
+            $table->text('description')->nullable();
             $table->text('description_en')->nullable();
             $table->foreignId('admin_header_id');
             $table->foreignId('user_id');

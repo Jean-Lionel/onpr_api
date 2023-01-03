@@ -72,15 +72,15 @@ class DeclarationController extends Controller
         $file_name_2 = "";
         $file_name_3 = "";
         if ($request->file_justification_1){
-           $file_name_1 = time().'.'.$request->file_justification_1->extension();  
+           $file_name_1 = time().'_1.'.$request->file_justification_1->extension();  
            $request->file_justification_1->move(public_path('documents/uploads'), $file_name_1);
        }
        if ($request->file_justification_2){
-        $file_name_2 = time().'.'.$request->file_justification_2->extension();  
+        $file_name_2 = time().'_2.'.$request->file_justification_2->extension();  
         $request->file_justification_2->move(public_path('documents/uploads'), $file_name_2);
         }
     if ($request->file_justification_3){
-        $file_name_3 = time().'.'.$request->file_justification_3->extension();  
+        $file_name_3 = time().'_3.'.$request->file_justification_3->extension();  
         $request->file_justification_3->move(public_path('documents/uploads'), $file_name_3);
          }
         $request->file_justification_1 = $file_name_1;
