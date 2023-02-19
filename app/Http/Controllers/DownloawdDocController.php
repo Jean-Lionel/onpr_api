@@ -31,7 +31,7 @@ class DownloawdDocController extends Controller
         //
         DownloawdDoc::create([
             'title' => $request->title,
-            'title_en' => $request->title_en ?? articleTranslater($request->title),
+            // 'title_en' => $request->title_en ?? articleTranslater($request->title),
         ]);
 
         return response()->json([

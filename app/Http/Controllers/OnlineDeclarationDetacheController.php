@@ -19,7 +19,6 @@ class OnlineDeclarationDetacheController extends Controller
     {
          $user = auth("sanctum")->user();
 
-
         if(!$user->isAdmin() && !$user->isChefRecouvrement() ){
             return OnlineDeclarationDetache::where('user_id', $user->id)->with('user')->latest()->paginate(10);
 
@@ -48,7 +47,7 @@ class OnlineDeclarationDetacheController extends Controller
             ], 400);
           }
 
-          $file_name_1 = time().'.'.$extension;
+          $file_name_1 = time().'_1.'.$extension;
 
            $request->file_uploaded_1->move(public_path('documents/declaration'), $file_name_1);
         }
@@ -60,7 +59,7 @@ class OnlineDeclarationDetacheController extends Controller
                 ['error' => 'Le fichier de type  '.$extension. " n'est pas accepté . " ]
             ], 400);
           }
-          $file_name_2 = time().'.'.$extension;
+          $file_name_2 = time().'_2.'.$extension;
            $request->file_uploaded_2->move(public_path('documents/declaration'), $file_name_2);
         }
 

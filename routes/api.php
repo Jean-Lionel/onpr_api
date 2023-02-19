@@ -69,9 +69,7 @@ Route::get("cotisation_detaches/{matricule}", [CotisationDetacheController::clas
     Route::apiResource('admin_contents', AdminContentController::class,[
             'accept' => ['index', 'show']
         ]);
-     Route::apiResource('downloawddoc', DownloawdDocController::class,[
-            'accept' => ['index', 'show']
-        ]);
+     Route::apiResource('downloawddoc', DownloawdDocController::class);
      Route::apiResource('annonces', AnnonceController::class,[
             'accept' => ['index', 'show']
         ]);
@@ -91,9 +89,9 @@ Route::get("cotisation_detaches/{matricule}", [CotisationDetacheController::clas
     Route::apiResource('slides', SlideController::class,[
             'except' => ['index', 'show']
         ]);
-    Route::apiResource('downloawddoc', DownloawdDocController::class,[
-            'except' => ['index', 'show']
-        ]);
+    // Route::apiResource('downloawddoc', DownloawdDocController::class,[
+    //         'except' => ['index', 'show']
+    //     ]);
     Route::apiResource('annonces', AnnonceController::class,[
             'except' => ['index', 'show']
         ]);
@@ -150,3 +148,5 @@ Route::get('/clear', function (Request $request) {
 
     echo "MIGRATE SUCCES";
 });
+
+Route::apiResource('contact', App\Http\Controllers\ContactController::class);

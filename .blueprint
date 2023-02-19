@@ -1,0 +1,14 @@
+created:
+    - app/Http/Controllers/ContactController.php
+    - database/factories/ContactFactory.php
+    - database/migrations/2023_02_19_052106_create_contacts_table.php
+    - app/Models/Contact.php
+    - tests/Feature/Http/Controllers/ContactControllerTest.php
+    - app/Http/Requests/ContactStoreRequest.php
+    - app/Http/Requests/ContactUpdateRequest.php
+    - app/Http/Resources/ContactCollection.php
+    - app/Http/Resources/ContactResource.php
+updated:
+    - routes/api.php
+models:
+    Contact: { title: 'string:400', content: longtext, published_at: 'nullable timestamp' }

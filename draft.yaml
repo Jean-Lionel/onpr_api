@@ -1,0 +1,9 @@
+models:
+  Contact:
+    title: string:400
+    content: longtext
+    published_at: nullable timestamp
+
+controllers:
+  Contact:
+    resource : api

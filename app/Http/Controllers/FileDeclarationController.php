@@ -91,8 +91,13 @@ class FileDeclarationController extends Controller
      * @param  \App\Models\FileDeclaration  $fileDeclaration
      * @return \Illuminate\Http\Response
      */
-    public function destroy(FileDeclaration $fileDeclaration)
+    public function destroy( $fileDeclaration)
     {
         //
+        $x = FileDeclaration::find( $fileDeclaration);
+        $x->delete();
+        return [
+            'success' => 'Ok je suis très'
+        ];
     }
 }
