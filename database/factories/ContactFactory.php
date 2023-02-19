@@ -23,8 +23,10 @@ class ContactFactory extends Factory
     public function definition()
     {
         return [
-            'title' => $this->faker->sentence(4),
-            'content' => $this->faker->paragraphs(3, true),
+            'title_en' => $this->faker->regexify('[A-Za-z0-9]{400}'),
+            'title_fr' => $this->faker->regexify('[A-Za-z0-9]{400}'),
+            'content_en' => $this->faker->text,
+            'content_fr' => $this->faker->text,
             'published_at' => $this->faker->dateTime(),
         ];
     }

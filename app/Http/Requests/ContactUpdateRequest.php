@@ -24,8 +24,10 @@ class ContactUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => ['required', 'string', 'max:400'],
-            'content' => ['required', 'string'],
+            'title_en' => ['required', 'string', 'max:400'],
+            'title_fr' => ['required', 'string', 'max:400'],
+            'content_en' => ['required', 'string'],
+            'content_fr' => ['required', 'string'],
             'published_at' => [''],
         ];
     }

@@ -149,4 +149,5 @@ Route::get('/clear', function (Request $request) {
     echo "MIGRATE SUCCES";
 });
 
-Route::apiResource('contact', App\Http\Controllers\ContactController::class);
+
+Route::apiResource('contacts', App\Http\Controllers\ContactController::class);

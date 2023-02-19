@@ -17,8 +17,7 @@ class Information extends Model
         parent::boot();
 
         self::creating(function($model){
-            $model->user_id = auth()->user()->id;
-
+            $model->user_id = auth()->user()->id ?? 1;
         });
     }
 }

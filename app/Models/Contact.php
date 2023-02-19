@@ -15,8 +15,10 @@ class Contact extends Model
      * @var array
      */
     protected $fillable = [
-        'title',
-        'content',
+        'title_en',
+        'title_fr',
+        'content_en',
+        'content_fr',
         'published_at',
     ];
 

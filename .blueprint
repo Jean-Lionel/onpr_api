@@ -1,7 +1,7 @@
 created:
     - app/Http/Controllers/ContactController.php
     - database/factories/ContactFactory.php
-    - database/migrations/2023_02_19_052106_create_contacts_table.php
+    - database/migrations/2023_02_19_054833_create_contacts_table.php
     - app/Models/Contact.php
     - tests/Feature/Http/Controllers/ContactControllerTest.php
     - app/Http/Requests/ContactStoreRequest.php
@@ -11,4 +11,25 @@ created:
 updated:
     - routes/api.php
 models:
-    Contact: { title: 'string:400', content: longtext, published_at: 'nullable timestamp' }
+    AdminContent: { title: string, title_en: 'text nullable', description: text, description_en: 'text nullable', admin_header_id: 'biginteger unsigned', user_id: 'biginteger unsigned' }
+    AdminHeader: { title: string, title_en: string, user_id: 'biginteger unsigned' }
+    Afilier: { nom: 'string nullable', prenom: 'string nullable', matricule: string, telephone: 'string nullable', salaire_base: 'float:64,2 default:0.00', email: 'string nullable', debut_travail: 'string nullable', institution_id: 'biginteger unsigned nullable', user_id: 'biginteger unsigned nullable' }
+    Annonce: { title: text, body: text, file_attachment: 'text nullable', user_id: 'biginteger unsigned nullable', published_at: 'string nullable', title_en: text, body_en: text }
+    Article: { title: string, slug: 'string nullable', body: text, image: 'string nullable', image_alt: 'string nullable', image_title: 'string nullable', image_caption: 'string nullable', image_credit: 'string nullable', image_source: 'string nullable', image_source_url: 'string nullable', user_id: 'biginteger unsigned nullable', title_en: text, body_en: text }
+    CotisationAfilier: { matricule: string, nom: 'string nullable', mois: integer, annee: integer, cotisation_employee: 'float:64,2 default:0.00', salaire_base: 'float:64,2 default:0.00', points: 'float:64,2 default:0.00', user_id: 'biginteger unsigned nullable', traitement: 'string nullable' }
+    CotisationDetache: { matricule: string, nom: 'string nullable', mois: integer, annee: integer, cotisation_employee: 'float:64,2 default:0.00', salaire_base: 'float:64,2 default:0.00', points: 'float:64,2 default:0.00', user_id: 'biginteger unsigned nullable', traitement: 'biginteger unsigned nullable' }
+    Declaration: { nom_instution: string, adresse: string, telephone: string, email: 'string nullable', nom_declarant: string, motif_declaration: text, date_declaration: date, victime_name: string, victime_prenom: string, type_declaration: 'string nullable', victime_matricule: 'string nullable', victime_telephone: 'string nullable', victime_fonction: 'string nullable', file_name_1: string, file_justification_1: string, file_name_2: 'string nullable', file_justification_2: 'string nullable', file_name_3: 'string nullable', file_justification_3: 'string nullable', is_opened: 'boolean default:0' }
+    DeclarationReadUser: { user_id: 'biginteger unsigned', online_declaration_detache_id: 'biginteger unsigned' }
+    Detache: { nom: 'string nullable', matricule: string, salaire_base: 'float:64,2 default:0.00', email: 'string nullable', debut_travail: 'string nullable', institution_id: 'biginteger unsigned nullable', user_id: 'biginteger unsigned nullable' }
+    DownloawdDoc: { title: string }
+    FileDeclaration: { name: string, title: string, downloawd_doc_id: 'biginteger unsigned' }
+    Information: { title_fr: 'string nullable', title_en: 'string nullable', description_en: 'text nullable', description_fr: 'text nullable', user_id: 'biginteger unsigned nullable' }
+    Institution: { name: string, identify: 'string nullable', address: 'string nullable', telephone: 'string nullable', typeinstution: 'string nullable', email: 'string nullable', chef_institution: 'string nullable', description: 'text nullable', user_id: 'biginteger unsigned' }
+    OnlineDeclarationDetache: { titre: 'string nullable', code_instution: string, nom_instution: string, mois: string, annee: string, date_declaration: date, description: 'text nullable', file_name_one: 'string nullable', file_uploaded_one: string, file_name_two: 'string nullable', file_uploaded_two: 'string nullable', file_name_three: 'string nullable', file_uploaded_three: 'string nullable', user_id: 'biginteger unsigned', institution_id: 'biginteger unsigned', is_opened: 'boolean default:0' }
+    Role: { name: string, description: 'text nullable' }
+    RoleUser: { user_id: 'biginteger unsigned', role_id: 'biginteger unsigned' }
+    Slide: { title: 'text nullable', img_alt: 'text nullable', image_caption: 'text nullable', image_description: 'text nullable', image: 'text nullable', user_id: 'biginteger unsigned' }
+    User: { name: string, email: string, email_verified_at: 'datetime nullable', password: string, telephone: 'string nullable', mobile: 'string nullable', role_id: 'string nullable', is_active: 'boolean default:1', institution_id: 'integer default:1', description: 'text nullable', remember_token: 'string:100 nullable' }
+    UserReadMessage: { user_id: 'biginteger unsigned', declaration_id: 'biginteger unsigned' }
+    YoutubeMedia: { youtube_title: 'text nullable', youtube_media: text, user_id: 'biginteger unsigned' }
+    Contact: { title_en: 'string:400', title_fr: 'string:400', content_en: longtext, content_fr: longtext, published_at: 'nullable timestamp' }

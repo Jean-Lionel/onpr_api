@@ -16,7 +16,7 @@ class InformationController extends Controller
     public function index()
     {
         //
-        return Information::latest()->paginate();
+        return Information::latest()->paginate(6);
     }
 
     /**
@@ -52,9 +52,12 @@ class InformationController extends Controller
      * @param  \App\Models\Information  $information
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateInformationRequest $request, Information $information)
+    public function update(UpdateInformationRequest $request, Information 
+        $information)
     {
         //
+        $information->update($request->all());
+        return  [];
     }
 
     /**

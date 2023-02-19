@@ -46,17 +46,23 @@ class ContactControllerTest extends TestCase
      */
     public function store_saves()
     {
-        $title = $this->faker->sentence(4);
-        $content = $this->faker->paragraphs(3, true);
+        $title_en = $this->faker->word;
+        $title_fr = $this->faker->word;
+        $content_en = $this->faker->text;
+        $content_fr = $this->faker->text;
 
         $response = $this->post(route('contact.store'), [
-            'title' => $title,
-            'content' => $content,
+            'title_en' => $title_en,
+            'title_fr' => $title_fr,
+            'content_en' => $content_en,
+            'content_fr' => $content_fr,
         ]);
 
         $contacts = Contact::query()
-            ->where('title', $title)
-            ->where('content', $content)
+            ->where('title_en', $title_en)
+            ->where('title_fr', $title_fr)
+            ->where('content_en', $content_en)
+            ->where('content_fr', $content_fr)
             ->get();
         $this->assertCount(1, $contacts);
         $contact = $contacts->first();
@@ -98,12 +104,16 @@ class ContactControllerTest extends TestCase
     public function update_behaves_as_expected()
     {
         $contact = Contact::factory()->create();
-        $title = $this->faker->sentence(4);
-        $content = $this->faker->paragraphs(3, true);
+        $title_en = $this->faker->word;
+        $title_fr = $this->faker->word;
+        $content_en = $this->faker->text;
+        $content_fr = $this->faker->text;
 
         $response = $this->put(route('contact.update', $contact), [
-            'title' => $title,
-            'content' => $content,
+            'title_en' => $title_en,
+            'title_fr' => $title_fr,
+            'content_en' => $content_en,
+            'content_fr' => $content_fr,
         ]);
 
         $contact->refresh();
@@ -111,8 +121,10 @@ class ContactControllerTest extends TestCase
         $response->assertOk();
         $response->assertJsonStructure([]);
 
-        $this->assertEquals($title, $contact->title);
-        $this->assertEquals($content, $contact->content);
+        $this->assertEquals($title_en, $contact->title_en);
+        $this->assertEquals($title_fr, $contact->title_fr);
+        $this->assertEquals($content_en, $contact->content_en);
+        $this->assertEquals($content_fr, $contact->content_fr);
     }
 
 

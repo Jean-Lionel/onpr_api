@@ -1,7 +1,9 @@
 models:
   Contact:
-    title: string:400
-    content: longtext
+    title_en: string:400
+    title_fr: string:400
+    content_en: longtext
+    content_fr: longtext
     published_at: nullable timestamp
 
 controllers:
