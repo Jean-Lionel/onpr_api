@@ -165,6 +165,8 @@ class ArticleController extends Controller
         $article->update([
             'title_en' => $request->title_en,
             'body_en' => $request->body_en,
+            'body' => $request->body,
+            'title' => $request->title,
         ]);
 
         return response()->json([
