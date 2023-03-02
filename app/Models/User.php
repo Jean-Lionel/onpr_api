@@ -31,7 +31,8 @@ class User extends Authenticatable
         'description',
         'role_id',
         'is_active',
-        'institution_id'
+        'institution_id',
+        'numero_matricule',
     ];
 
     /**

@@ -49,12 +49,22 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        if (!Auth::attempt($request->only('email', 'password'))) {
+        
+
+        $field = 'email';
+
+        if(!filter_var($request['email'], FILTER_VALIDATE_EMAIL)){
+            $field = 'numero_matricule';
+        }
+
+        if (!Auth::attempt([$field => $request->email, 'password' => $request->password])) {
             return response()->json([
                 'message' => 'Invalid login details'
             ], 401);
         }
-        $user = User::where('email', $request['email'])->firstOrFail();
+
+
+        $user = User::where($field, $request['email'])->firstOrFail();
 
         if($user->is_active == 0){
             return response()->json([

@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
 use DB;
-use Hash;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -31,30 +33,62 @@ class UserController extends Controller
 
     public function saveMember(Request $request){
 
-        {"firstName":"Hannah","lastName":"Eaton","email":"vynap@mailinator.com","numero_matricule":"Excepteur nostrud si","telephone":"+1 (324) 893-8777","password":"12345678"}
+        // Validate request data
+        $validator = Validator::make($request->all(), [
+            'firstName' => 'required|string|max:255',
+            'lastName' => 'required|string|max:255',
+            'email' => 'required|email|unique:users|max:255',
+            'numero_matricule' => 'required|unique:users|max:255',
+            'password' => 'required|min:6',
+        ]);
+    // Return errors if validation error occur.
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            return response()->json([
+                'error' => $errors
+            ], 400);
+        }
+    // Check if validation pass then create user and auth token. Return the auth token
+        if ($validator->passes()) {
+            $user = User::create([
+                'name' => $request->firstName . '  '.$request->lastName,
+                'email' => $request->email,
+                'telephone' => $request->telephone,
+                'description' => $request->description,
+                'numero_matricule' => $request->numero_matricule,
+                'password' => Hash::make($request->password)
+            ]);
+            $token = $user->createToken('auth_token')->plainTextToken;
+
+            return response()->json([
+                'data' => Auth::user(),
+                'access_token' => $token,
+                'token_type' => 'Bearer',
+            ]);
+        }
 
         return  $request->all();
     }
 
-     public function search($search_key){
+    public function search($search_key){
 
          //$search_key = $request->query('search_key');
 
-         if($search_key == 'ALL_DATA') return User::with('role')->orderBy('id','DESC')->paginate(20);
+       if($search_key == 'ALL_DATA') return User::with('role')->orderBy('id','DESC')->paginate(20);
 
-        $users = User::where(function($query) use ($search_key){
-            if($search_key){
-                $query->where('name', 'like', '%'.$search_key . '%' )
-                  ->orWhere('email', 'like', '%'.$search_key. '%');
-            }
-        })->paginate(20);
-
-
-        return $users;
-    }
+       $users = User::where(function($query) use ($search_key){
+        if($search_key){
+            $query->where('name', 'like', '%'.$search_key . '%' )
+            ->orWhere('email', 'like', '%'.$search_key. '%');
+        }
+    })->paginate(20);
 
 
-    
+       return $users;
+   }
+
+
+
 
     /**
 
@@ -73,7 +107,7 @@ class UserController extends Controller
     }
 
     public function addRole($role_id){
-        
+
         $user->roles()->sync($request->roles);
         return response()->json([
             "success" => "Role add successfully"
@@ -224,9 +258,9 @@ class UserController extends Controller
 
         $user->update($input);
         
-       return response()->json([
-        'success','User updated successfully'
-       ]);
+        return response()->json([
+            'success','User updated successfully'
+        ]);
 
     }
 
