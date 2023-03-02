@@ -37,6 +37,7 @@ use App\Http\Controllers\OnlineDeclarationDetacheController;
 
 
 Route::post('register', [AuthController::class, 'register']);
+Route::post('saveMember', [UserController::class,  'saveMember']);
 Route::post('login', [AuthController::class, 'login']);
 Route::apiResource('youtube_medias', YoutubeMediaController::class,[
             'except' => ['store', 'destroy']

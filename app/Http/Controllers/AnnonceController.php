@@ -82,12 +82,15 @@ class AnnonceController extends Controller
         // Translates into English
 
         $annonce = Annonce::find($id);
+
          $annonce->update([
-            'body_en'=> $request->body,
-            'title_en' =>$request->title,
+            'body_en'=> $request->body_en,
+            'body'=> $request->body,
+            'title' =>$request->title,
+            'title_en' =>$request->title_en,
             'user_id' =>  auth('sanctum')->user()->id,
         ]);
-
+    
         return response()->json([
             'success' => 'updated success'
         ]);

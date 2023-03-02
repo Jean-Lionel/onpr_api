@@ -158,15 +158,47 @@ class ArticleController extends Controller
 
     public function update(Request $request,  $id)
     {
-
         
         $article = Article::find($id);
+
+
+         $imageName = $article->image;
+        if (isset($request->image)) {
+            # code...
+            $file = $request->file("image"); 
+            $allowedfileExtension=['jpeg','jpg','png','jpeg'];
+            $extension = $file->getClientOriginalExtension();
+            $check = in_array($extension,$allowedfileExtension);
+
+            if (!$check) {
+            // code...
+                return response()->json(
+                    ['error' => 'Unknown extention type '], 400); 
+             }
+           
+            $image = $request->file('image');
+
+            $imageName = time() . '.'. $image->getClientOriginalExtension();
+
+            $destinationPath  = public_path('img/articles');
+            $imageFile = Image::make($image->getRealPath());
+
+            $imageFile->resize(400,600,function($constraint){
+                $constraint->aspectRatio();
+            })->save($destinationPath .'/'.   $imageName);
+
+            // $destinationPath = public_path('/uploads');
+            // $image->move($destinationPath, $imageName);
+        }
+
+
 
         $article->update([
             'title_en' => $request->title_en,
             'body_en' => $request->body_en,
             'body' => $request->body,
             'title' => $request->title,
+            'image' => $imageName, 
         ]);
 
         return response()->json([

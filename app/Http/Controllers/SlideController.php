@@ -49,7 +49,7 @@ class SlideController extends Controller
             $image = $request->file('image');
             $imageName = time() . '.'. $image->getClientOriginalExtension();
 
-            $destinationPath  = public_path('img\slides');
+            $destinationPath  = public_path('img/slides');
             $imageFile = Image::make($image->getRealPath());
 
             $imageFile->resize(1100,537,function($constraint){

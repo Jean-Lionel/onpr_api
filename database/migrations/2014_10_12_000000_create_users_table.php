@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->boolean('is_active')->default(true);
             $table->integer('institution_id')->default(1);
             $table->text('description')->nullable();
+         
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

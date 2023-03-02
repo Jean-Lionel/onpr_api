@@ -29,6 +29,13 @@ class UserController extends Controller
         return  $data;
     }
 
+    public function saveMember(Request $request){
+
+        {"firstName":"Hannah","lastName":"Eaton","email":"vynap@mailinator.com","numero_matricule":"Excepteur nostrud si","telephone":"+1 (324) 893-8777","password":"12345678"}
+
+        return  $request->all();
+    }
+
      public function search($search_key){
 
          //$search_key = $request->query('search_key');
