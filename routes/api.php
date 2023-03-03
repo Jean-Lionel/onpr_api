@@ -60,7 +60,7 @@ Route::get("toutArticles", [ArticleController::class, 'toutArticles']);
 
 Route::get("cotisations_afiliers/{matricule}", [CotisationAfilierController::class, "searchByMatricule"]);
 
-Route::get("cotisation_detaches", [CotisationDetacheController::class, "searchByMatricule"]);
+
 
 //Route::apiResource("declaration", [DeclarationController::class, 'store']);
 
@@ -127,14 +127,15 @@ Route::get("cotisation_detaches", [CotisationDetacheController::class, "searchBy
     Route::get('institutions/search/{search_key}', [InstitutionController::class, 'search']);  
     Route::get('users/search/{search_key}', [UserController::class, 'search']);
     Route::apiResource('roles', RoleController::class);
-   
+   Route::apiResource('cotisation_detaches', CotisationDetacheController::class);
    
 });
 
 
 // Route pour un visiteur connecté
 Route::middleware(['auth:sanctum', 'can:is-member'])->group(function(){
-    Route::apiResource('cotisation_detaches', CotisationDetacheController::class);
+    
+    Route::get("cotisation_detaches", [CotisationDetacheController::class, "searchByMatricule"]);
 });
 
 Route::post('logout', [AuthController::class, 'logout']);

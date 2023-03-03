@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\CotisationAfilier;
 use App\Models\CotisationDetache;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StoreCotisationDetacheRequest;
@@ -25,8 +26,15 @@ class CotisationDetacheController extends Controller
 
         $matricule  = auth()->user()->numero_matricule;
 
-        $cotisations = CotisationDetache::where('matricule', '=',$matricule )
+        //dd($matricule );
+
+         $detaches= CotisationDetache::where('matricule', '=',$matricule )
         ->orderBy('annee','DESC')->orderBy('mois', 'DESC')->get();
+
+        $affilies = CotisationAfilier::where('matricule', '=',$matricule )
+        ->orderBy('annee','DESC')->orderBy('mois', 'DESC')->get();
+
+        $cotisations = $detaches->merge($affilies);
 
         return $cotisations->count() ? $cotisations : "Le Numéro Matricule introuvable";
     }
