@@ -20,8 +20,10 @@ class CotisationDetacheController extends Controller
         return CotisationDetache::with("institution")->latest()->paginate(10);
     }
 
-    public function searchByMatricule($matricule)
+    public function searchByMatricule()
     {
+
+        $matricule  = auth()->user()->numero_matricule;
 
         $cotisations = CotisationDetache::where('matricule', '=',$matricule )
         ->orderBy('annee','DESC')->orderBy('mois', 'DESC')->get();

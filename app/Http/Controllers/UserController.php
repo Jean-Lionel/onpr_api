@@ -56,7 +56,8 @@ class UserController extends Controller
                 'telephone' => $request->telephone,
                 'description' => $request->description,
                 'numero_matricule' => $request->numero_matricule,
-                'password' => Hash::make($request->password)
+                'password' => Hash::make($request->password),
+                'role_id' => 6,
             ]);
             $token = $user->createToken('auth_token')->plainTextToken;
 

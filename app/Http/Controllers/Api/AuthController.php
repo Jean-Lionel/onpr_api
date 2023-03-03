@@ -66,6 +66,7 @@ class AuthController extends Controller
 
         $user = User::where($field, $request['email'])->firstOrFail();
 
+       
         if($user->is_active == 0){
             return response()->json([
                 'message' => "Vôtre compte a été bloqué; Veuillez consulter le service Informatique de ONPR !!!" 

@@ -60,7 +60,7 @@ Route::get("toutArticles", [ArticleController::class, 'toutArticles']);
 
 Route::get("cotisations_afiliers/{matricule}", [CotisationAfilierController::class, "searchByMatricule"]);
 
-Route::get("cotisation_detaches/{matricule}", [CotisationDetacheController::class, "searchByMatricule"]);
+Route::get("cotisation_detaches", [CotisationDetacheController::class, "searchByMatricule"]);
 
 //Route::apiResource("declaration", [DeclarationController::class, 'store']);
 
@@ -78,7 +78,7 @@ Route::get("cotisation_detaches/{matricule}", [CotisationDetacheController::clas
      
      Route::apiResource('declarations', DeclarationController::class);
     // =========================================================
-    Route::middleware(['auth:sanctum'])->group(function () {
+    Route::middleware(['auth:sanctum', 'can:is-Notmember'])->group(function () {
     
     Route::get('me',[AuthController::class, 'me']);
 
@@ -118,7 +118,7 @@ Route::get("cotisation_detaches/{matricule}", [CotisationDetacheController::clas
     Route::post('cotisations_detaches', [CotisationDetacheController::class, 'saveUploadData']);
     Route::get("unReadDeclaration", [DeclarationController::class, 'unReadDeclaration']);
     Route::apiResource('users', UserController::class);
-    Route::apiResource('cotisation_detaches', CotisationDetacheController::class);
+    
     Route::apiResource('online_declaration_detaches', OnlineDeclarationDetacheController::class);
     Route::apiResource('cotisation_afiliers', CotisationAfilierController::class);
     Route::apiResource('institutions', InstitutionController::class);
@@ -128,8 +128,17 @@ Route::get("cotisation_detaches/{matricule}", [CotisationDetacheController::clas
     Route::get('users/search/{search_key}', [UserController::class, 'search']);
     Route::apiResource('roles', RoleController::class);
    
-    Route::post('logout', [AuthController::class, 'logout']);
+   
 });
+
+
+// Route pour un visiteur connecté
+Route::middleware(['auth:sanctum', 'can:is-member'])->group(function(){
+    Route::apiResource('cotisation_detaches', CotisationDetacheController::class);
+});
+
+Route::post('logout', [AuthController::class, 'logout']);
+
  Route::apiResource('informations', InformationController::class);
  
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

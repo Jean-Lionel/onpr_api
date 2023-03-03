@@ -19,7 +19,8 @@ class RoleSeeder extends Seeder
             "EMPLOYEUR",
             "CHEF RECOUVREMENT",
             "RISQUE PROFESSIONELLE",
-            "ADMINISTRATEUR WEB"
+            "ADMINISTRATEUR WEB",
+            "MEMBRE",
         ];
 
         foreach ($roles as $role){
