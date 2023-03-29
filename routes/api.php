@@ -128,6 +128,9 @@ Route::get("cotisations_afiliers/{matricule}", [CotisationAfilierController::cla
     Route::get('users/search/{search_key}', [UserController::class, 'search']);
     Route::apiResource('roles', RoleController::class);
    Route::apiResource('cotisation_detaches', CotisationDetacheController::class);
+
+   Route::get('get_member/{matricule?}', [UserController::class , 'getMember']);
+   Route::post('change_user_password', [UserController::class , 'change_user_password']);
    
 });
 
@@ -136,6 +139,8 @@ Route::get("cotisations_afiliers/{matricule}", [CotisationAfilierController::cla
 Route::middleware(['auth:sanctum', 'can:is-member'])->group(function(){
     
     Route::get("cotisation_detaches", [CotisationDetacheController::class, "searchByMatricule"]);
+    Route::post('change_password', [UserController::class, 'change_password']);
+
 });
 
 Route::post('logout', [AuthController::class, 'logout']);

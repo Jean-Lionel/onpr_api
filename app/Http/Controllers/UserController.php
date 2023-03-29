@@ -14,6 +14,34 @@ use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
 
+
+    public function getMember($matricule = null){
+
+       // $matricule = \Request::get('matricule');
+
+        $users = User::where('role_id','=',6)
+            ->where(function($q) use ($matricule){
+                if($matricule){
+                    $q->where('numero_matricule', 'like', '%'.$matricule);
+                }
+            })
+        ->paginate();
+
+        return $users;
+    }
+
+    public function change_user_password(Request $request){
+
+        $user = User::find($request->user_id);
+        $user->password = bcrypt($request->password);
+        $user->save();
+        $user->tokens()->delete();
+
+        return response()->json([
+            'success' => 'Modification réussi'
+        ]);
+    }
+
     /**
 
      * Display a listing of the resource.
@@ -24,11 +52,40 @@ class UserController extends Controller
 
      */
 
-    public function index(Request $request)
+    public function index()
     {
 
-        $data = User::with('role')->orderBy('id','DESC')->paginate(20);
+        $data = User::where('role_id' ,'!=',6)->with('role')->orderBy('id','DESC')->paginate(20);
         return  $data;
+    }
+
+    public function change_password(Request $request){
+
+        $user = Auth::user();
+        
+
+        $credintial = $user->email ;
+
+        $field = 'email';
+
+        if(!filter_var($credintial, FILTER_VALIDATE_EMAIL)){
+            $field = 'numero_matricule';
+            $credintial = $user->numero_matricule;
+        }
+
+        // if (!Auth::attempt([$field => $credintial, 'password' => $request->password])) {
+        //     return response()->json([
+        //         'message' => 'Invalid password'
+        //     ], 401);
+        // }
+
+        $user->password = bcrypt($request->password);
+        $user->save();
+        $user->tokens()->delete();
+
+        return response()->json([
+            'success' => 'Modification réussi'
+        ]);
     }
 
     public function saveMember(Request $request){
@@ -37,7 +94,7 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'firstName' => 'required|string|max:255',
             'lastName' => 'required|string|max:255',
-            'email' => 'required|email|unique:users|max:255',
+          //  'email' => 'required|email|unique:users|max:255',
             'numero_matricule' => 'required|unique:users|max:255',
             'password' => 'required|min:6',
         ]);
@@ -52,7 +109,7 @@ class UserController extends Controller
         if ($validator->passes()) {
             $user = User::create([
                 'name' => $request->firstName . '  '.$request->lastName,
-                'email' => $request->email,
+               // 'email' => $request->email,
                 'telephone' => $request->telephone,
                 'description' => $request->description,
                 'numero_matricule' => $request->numero_matricule,
