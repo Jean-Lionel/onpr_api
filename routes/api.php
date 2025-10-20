@@ -23,6 +23,7 @@ use App\Http\Controllers\FileDeclarationController;
 use App\Http\Controllers\CotisationAfilierController;
 use App\Http\Controllers\CotisationDetacheController;
 use App\Http\Controllers\OnlineDeclarationDetacheController;
+use App\Http\Controllers\GalleryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -75,11 +76,11 @@ Route::get("cotisations_afiliers/{matricule}", [CotisationAfilierController::cla
             'accept' => ['index', 'show']
         ]);
      Route::get("Translator_annon", [AnnonceController::class, 'annonceTranslater']);
-     
+
      Route::apiResource('declarations', DeclarationController::class);
     // =========================================================
     Route::middleware(['auth:sanctum', 'can:is-Notmember'])->group(function () {
-    
+
     Route::get('me',[AuthController::class, 'me']);
 
     Route::get('list_chargements', [ CotisationAfilierController::class, 'list_chargements']);
@@ -112,32 +113,34 @@ Route::get("cotisations_afiliers/{matricule}", [CotisationAfilierController::cla
             'except' => ['index', 'show']
         ]);
     Route::post("admin_contents_translate", [AdminContentController::class, "admin_contents_translate"]);
-    
-    Route::get('declarations/search/{search_key}', [DeclarationController::class, 'search']); 
+
+    Route::get('declarations/search/{search_key}', [DeclarationController::class, 'search']);
     Route::post('cotisations', [CotisationAfilierController::class, 'saveUploadData']);
     Route::post('cotisations_detaches', [CotisationDetacheController::class, 'saveUploadData']);
     Route::get("unReadDeclaration", [DeclarationController::class, 'unReadDeclaration']);
     Route::apiResource('users', UserController::class);
-    
+
     Route::apiResource('online_declaration_detaches', OnlineDeclarationDetacheController::class);
     Route::apiResource('cotisation_afiliers', CotisationAfilierController::class);
     Route::apiResource('institutions', InstitutionController::class);
     Route::post('cotisation_annuler/{traitement}/{table}', [CotisationAfilierController::class, 'annuler']);
     Route::get('institutions/groupby/{typeInstution}', [InstitutionController::class, 'groupby']);
-    Route::get('institutions/search/{search_key}', [InstitutionController::class, 'search']);  
+    Route::get('institutions/search/{search_key}', [InstitutionController::class, 'search']);
     Route::get('users/search/{search_key}', [UserController::class, 'search']);
     Route::apiResource('roles', RoleController::class);
    Route::apiResource('cotisation_detaches', CotisationDetacheController::class);
 
    Route::get('get_member/{matricule?}', [UserController::class , 'getMember']);
    Route::post('change_user_password', [UserController::class , 'change_user_password']);
-   
+
 });
 
+Route::apiResource('gallery', GalleryController::class);
+Route::get('gallery/categories', [GalleryController::class, 'getCategories']);
 
 // Route pour un visiteur connecté
 Route::middleware(['auth:sanctum', 'can:is-member'])->group(function(){
-    
+
     Route::get("cotisation_detaches", [CotisationDetacheController::class, "searchByMatricule"]);
     Route::post('change_password', [UserController::class, 'change_password']);
 
@@ -146,17 +149,17 @@ Route::middleware(['auth:sanctum', 'can:is-member'])->group(function(){
 Route::post('logout', [AuthController::class, 'logout']);
 
  Route::apiResource('informations', InformationController::class);
- 
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
 
 Route::get('/clear', function (Request $request) {
-    
+
     $clearconfig = Artisan::call('config:cache');
     echo "Config cleared<br>";
-    
+
     $clearcache = Artisan::call('cache:clear');
     echo "Cache cleared<br>";
     $clearview = Artisan::call('view:clear');
