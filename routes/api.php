@@ -151,7 +151,7 @@ Route::get('briefs/recent', [BriefController::class, 'recent']);
 Route::get('briefs/today', [BriefController::class, 'today']);
 
 Route::apiResource('photo-week', PhotoWeekController::class);
-Route::get('photo-week/active', [PhotoWeekController::class, 'active']);
+Route::get('photo-weeks/active', [PhotoWeekController::class, 'active']);
 
 // Route pour un visiteur connecté
 Route::middleware(['auth:sanctum', 'can:is-member'])->group(function(){
