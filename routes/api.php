@@ -25,6 +25,7 @@ use App\Http\Controllers\CotisationDetacheController;
 use App\Http\Controllers\OnlineDeclarationDetacheController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\BriefController;
 
 /*
 |--------------------------------------------------------------------------
@@ -143,6 +144,10 @@ Route::get('gallery/categories', [GalleryController::class, 'getCategories']);
 Route::apiResource('events', EventController::class);
 Route::get('events/upcoming', [EventController::class, 'upcoming']);
 Route::get('events/categories', [EventController::class, 'getCategories']);
+
+Route::apiResource('briefs', BriefController::class);
+Route::get('briefs/recent', [BriefController::class, 'recent']);
+Route::get('briefs/today', [BriefController::class, 'today']);
 
 // Route pour un visiteur connecté
 Route::middleware(['auth:sanctum', 'can:is-member'])->group(function(){
