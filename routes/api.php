@@ -26,6 +26,7 @@ use App\Http\Controllers\OnlineDeclarationDetacheController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\BriefController;
+use App\Http\Controllers\PhotoWeekController;
 
 /*
 |--------------------------------------------------------------------------
@@ -148,6 +149,9 @@ Route::get('events/categories', [EventController::class, 'getCategories']);
 Route::apiResource('briefs', BriefController::class);
 Route::get('briefs/recent', [BriefController::class, 'recent']);
 Route::get('briefs/today', [BriefController::class, 'today']);
+
+Route::apiResource('photo-week', PhotoWeekController::class);
+Route::get('photo-week/active', [PhotoWeekController::class, 'active']);
 
 // Route pour un visiteur connecté
 Route::middleware(['auth:sanctum', 'can:is-member'])->group(function(){
