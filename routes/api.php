@@ -24,6 +24,7 @@ use App\Http\Controllers\CotisationAfilierController;
 use App\Http\Controllers\CotisationDetacheController;
 use App\Http\Controllers\OnlineDeclarationDetacheController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\EventController;
 
 /*
 |--------------------------------------------------------------------------
@@ -137,6 +138,11 @@ Route::get("cotisations_afiliers/{matricule}", [CotisationAfilierController::cla
 
 Route::apiResource('gallery', GalleryController::class);
 Route::get('gallery/categories', [GalleryController::class, 'getCategories']);
+
+
+Route::apiResource('events', EventController::class);
+Route::get('events/upcoming', [EventController::class, 'upcoming']);
+Route::get('events/categories', [EventController::class, 'getCategories']);
 
 // Route pour un visiteur connecté
 Route::middleware(['auth:sanctum', 'can:is-member'])->group(function(){
