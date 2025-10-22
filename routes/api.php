@@ -143,12 +143,12 @@ Route::get('gallery/categories', [GalleryController::class, 'getCategories']);
 
 
 Route::apiResource('events', EventController::class);
-Route::get('events/upcoming', [EventController::class, 'upcoming']);
-Route::get('events/categories', [EventController::class, 'getCategories']);
+Route::get('event/upcoming', [EventController::class, 'upcoming']);
+Route::get('event/categories', [EventController::class, 'getCategories']);
 
 Route::apiResource('briefs', BriefController::class);
-Route::get('briefs/recent', [BriefController::class, 'recent']);
-Route::get('briefs/today', [BriefController::class, 'today']);
+Route::get('brief/recent', [BriefController::class, 'recent']);
+Route::get('brief/today', [BriefController::class, 'today']);
 
 Route::apiResource('photo-week', PhotoWeekController::class);
 Route::get('photo-weeks/active', [PhotoWeekController::class, 'active']);
