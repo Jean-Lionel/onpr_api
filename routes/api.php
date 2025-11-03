@@ -185,3 +185,8 @@ Route::get('/clear', function (Request $request) {
 
 
 Route::apiResource('contacts', App\Http\Controllers\ContactController::class);
+
+
+Route::apiResource('quick-links', App\Http\Controllers\QuickLinkController::class);
+Route::apiResource('gallery-directions', App\Http\Controllers\GalleryDirectionController::class);
+Route::apiResource('contact-links', App\Http\Controllers\ContactLinkController::class);

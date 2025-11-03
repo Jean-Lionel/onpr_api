@@ -1,11 +1,37 @@
 models:
-  Contact:
-    title_en: string:400
-    title_fr: string:400
-    content_en: longtext
-    content_fr: longtext
-    published_at: nullable timestamp
+  QuickLink:
+    name_en: nullable string
+    name_fr: nullable string
+    description_en: nullable string
+    description_fr: nullable string
+    email: nullable string
+    phone: nullable string
+    address_en: nullable string
+    address_fr: nullable string
+    box: nullable string
+
+  GalleryDirection:
+    name_en: nullable string
+    name_fr: nullable string
+    description_en: nullable string
+    description_fr: nullable string
+    image: nullable string
+
+  ContactLink:
+    name_en: nullable string
+    name_fr: nullable string
+    description_en: nullable string
+    description_fr: nullable string
+    email: nullable string
+    phone: nullable string
+    address_en: nullable string
+    address_fr: nullable string
+    box: nullable string
 
 controllers:
-  Contact:
+  QuickLink:
+    resource : api
+  GalleryDirection:
+    resource : api
+  ContactLink:
     resource : api

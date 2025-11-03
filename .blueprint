@@ -1,13 +1,31 @@
 created:
-    - app/Http/Controllers/ContactController.php
-    - database/factories/ContactFactory.php
-    - database/migrations/2023_02_19_054833_create_contacts_table.php
-    - app/Models/Contact.php
-    - tests/Feature/Http/Controllers/ContactControllerTest.php
-    - app/Http/Requests/ContactStoreRequest.php
-    - app/Http/Requests/ContactUpdateRequest.php
-    - app/Http/Resources/ContactCollection.php
-    - app/Http/Resources/ContactResource.php
+    - app/Http/Controllers/QuickLinkController.php
+    - app/Http/Controllers/GalleryDirectionController.php
+    - app/Http/Controllers/ContactLinkController.php
+    - database/factories/QuickLinkFactory.php
+    - database/factories/GalleryDirectionFactory.php
+    - database/factories/ContactLinkFactory.php
+    - database/migrations/2025_11_03_094451_create_quick_links_table.php
+    - database/migrations/2025_11_03_094452_create_gallery_directions_table.php
+    - database/migrations/2025_11_03_094453_create_contact_links_table.php
+    - app/Models/QuickLink.php
+    - app/Models/GalleryDirection.php
+    - app/Models/ContactLink.php
+    - tests/Feature/Http/Controllers/QuickLinkControllerTest.php
+    - tests/Feature/Http/Controllers/GalleryDirectionControllerTest.php
+    - tests/Feature/Http/Controllers/ContactLinkControllerTest.php
+    - app/Http/Requests/QuickLinkStoreRequest.php
+    - app/Http/Requests/QuickLinkUpdateRequest.php
+    - app/Http/Requests/GalleryDirectionStoreRequest.php
+    - app/Http/Requests/GalleryDirectionUpdateRequest.php
+    - app/Http/Requests/ContactLinkStoreRequest.php
+    - app/Http/Requests/ContactLinkUpdateRequest.php
+    - app/Http/Resources/QuickLinkCollection.php
+    - app/Http/Resources/QuickLinkResource.php
+    - app/Http/Resources/GalleryDirectionCollection.php
+    - app/Http/Resources/GalleryDirectionResource.php
+    - app/Http/Resources/ContactLinkCollection.php
+    - app/Http/Resources/ContactLinkResource.php
 updated:
     - routes/api.php
 models:
@@ -33,3 +51,6 @@ models:
     UserReadMessage: { user_id: 'biginteger unsigned', declaration_id: 'biginteger unsigned' }
     YoutubeMedia: { youtube_title: 'text nullable', youtube_media: text, user_id: 'biginteger unsigned' }
     Contact: { title_en: 'string:400', title_fr: 'string:400', content_en: longtext, content_fr: longtext, published_at: 'nullable timestamp' }
+    QuickLink: { name_en: 'nullable string', name_fr: 'nullable string', description_en: 'nullable string', description_fr: 'nullable string', email: 'nullable string', phone: 'nullable string', address_en: 'nullable string', address_fr: 'nullable string', box: 'nullable string' }
+    GalleryDirection: { name_en: 'nullable string', name_fr: 'nullable string', description_en: 'nullable string', description_fr: 'nullable string', image: 'nullable string' }
+    ContactLink: { name_en: 'nullable string', name_fr: 'nullable string', description_en: 'nullable string', description_fr: 'nullable string', email: 'nullable string', phone: 'nullable string', address_en: 'nullable string', address_fr: 'nullable string', box: 'nullable string' }
