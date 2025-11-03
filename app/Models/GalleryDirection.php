@@ -26,7 +26,7 @@ class GalleryDirection extends Model
     public function getImageUrlAttribute()
     {
         if ($this->image && Storage::disk('public')->exists($this->image)) {
-            return Storage::url($this->image);
+            return asset( Storage::url($this->image) );
         }
         return null;
     }

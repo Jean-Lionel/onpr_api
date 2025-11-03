@@ -24,15 +24,16 @@ class QuickLinkStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'name_en' => ['string'],
-            'name_fr' => ['string'],
-            'description_en' => ['string'],
-            'description_fr' => ['string'],
-            'email' => ['email'],
-            'phone' => ['string'],
-            'address_en' => ['string'],
-            'address_fr' => ['string'],
-            'box' => ['string'],
+            'name_en' => ['nullable', 'string'],
+            'name_fr' => ['nullable', 'string'],
+            'description_en' => ['nullable', 'string'],
+            'description_fr' => ['nullable', 'string'],
+            'email' => ['nullable', 'email'],
+            'phone' => ['nullable', 'string'],
+            'address_en' => ['nullable', 'string'],
+            'address_fr' => ['nullable', 'string'],
+            'box' => ['nullable', 'string'],
         ];
+
     }
 }
