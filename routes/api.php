@@ -144,6 +144,7 @@ Route::get('gallery/categories', [GalleryController::class, 'getCategories']);
 
 Route::apiResource('events', EventController::class);
 Route::get('event/upcoming', [EventController::class, 'upcoming']);
+Route::get('event/past', [EventController::class, 'past']);
 Route::get('event/categories', [EventController::class, 'getCategories']);
 
 Route::apiResource('briefs', BriefController::class);

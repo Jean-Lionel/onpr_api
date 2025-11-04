@@ -181,7 +181,7 @@ class EventController extends Controller
      */
     public function upcoming(Request $request)
     {
-        $limit = $request->get('limit', 10);
+        $limit = $request->get('limit', 3);
 
         $events = Event::where('date', '>=', now()->format('Y-m-d'))
             ->orderBy('date', 'asc')
@@ -194,6 +194,27 @@ class EventController extends Controller
             'data' => $events
         ]);
     }
+
+    /**
+     * Obtenir les événements passés
+     */
+    public function past(Request $request)
+    {
+        $limit = $request->get('limit', 3);
+
+        $events = Event::where('date', '<', now()->format('Y-m-d'))
+            ->orderBy('date', 'desc')
+            ->orderBy('time', 'desc')
+            ->limit($limit)
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $events
+        ]);
+    }
+
+
 
     /**
      * Obtenir toutes les catégories
