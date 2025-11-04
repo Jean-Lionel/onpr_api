@@ -24,11 +24,11 @@ class GalleryDirectionUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name_en' => ['string'],
-            'name_fr' => ['string'],
-            'description_en' => ['string'],
-            'description_fr' => ['string'],
-            'image' => ['string'],
+            'name_en' => 'nullable|string',
+            'name_fr' => 'nullable|string',
+            'description_en' => 'nullable|string',
+            'description_fr' => 'nullable|string',
+            'image' => 'nullable|image|max:5120', // max 5MB
         ];
     }
 }
