@@ -1,37 +1,8 @@
 models:
-  QuickLink:
-    name_en: nullable string
-    name_fr: nullable string
-    description_en: nullable string
-    description_fr: nullable string
-    email: nullable string
-    phone: nullable string
-    address_en: nullable string
-    address_fr: nullable string
-    box: nullable string
-
-  GalleryDirection:
-    name_en: nullable string
-    name_fr: nullable string
-    description_en: nullable string
-    description_fr: nullable string
-    image: nullable string
-
-  ContactLink:
-    name_en: nullable string
-    name_fr: nullable string
-    description_en: nullable string
-    description_fr: nullable string
-    email: nullable string
-    phone: nullable string
-    address_en: nullable string
-    address_fr: nullable string
-    box: nullable string
-
+  VideoFile:
+    file_path: string
+    title: string
 controllers:
-  QuickLink:
+  VideoFile:
     resource : api
-  GalleryDirection:
-    resource : api
-  ContactLink:
-    resource : api
+

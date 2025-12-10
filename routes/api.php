@@ -47,6 +47,7 @@ Route::apiResource('youtube_medias', YoutubeMediaController::class,[
             'except' => ['store', 'destroy']
         ]);
 
+
  Route::apiResource('articles', ArticleController::class,[
             'accept' => ['index', 'show']
         ]);
@@ -191,3 +192,6 @@ Route::apiResource('contacts', App\Http\Controllers\ContactController::class);
 Route::apiResource('quick-links', App\Http\Controllers\QuickLinkController::class);
 Route::apiResource('gallery-directions', App\Http\Controllers\GalleryDirectionController::class);
 Route::apiResource('contact-links', App\Http\Controllers\ContactLinkController::class);
+
+
+Route::apiResource('video-files', App\Http\Controllers\VideoFileController::class);

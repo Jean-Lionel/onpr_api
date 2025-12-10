@@ -1,31 +1,13 @@
 created:
-    - app/Http/Controllers/QuickLinkController.php
-    - app/Http/Controllers/GalleryDirectionController.php
-    - app/Http/Controllers/ContactLinkController.php
-    - database/factories/QuickLinkFactory.php
-    - database/factories/GalleryDirectionFactory.php
-    - database/factories/ContactLinkFactory.php
-    - database/migrations/2025_11_03_094451_create_quick_links_table.php
-    - database/migrations/2025_11_03_094452_create_gallery_directions_table.php
-    - database/migrations/2025_11_03_094453_create_contact_links_table.php
-    - app/Models/QuickLink.php
-    - app/Models/GalleryDirection.php
-    - app/Models/ContactLink.php
-    - tests/Feature/Http/Controllers/QuickLinkControllerTest.php
-    - tests/Feature/Http/Controllers/GalleryDirectionControllerTest.php
-    - tests/Feature/Http/Controllers/ContactLinkControllerTest.php
-    - app/Http/Requests/QuickLinkStoreRequest.php
-    - app/Http/Requests/QuickLinkUpdateRequest.php
-    - app/Http/Requests/GalleryDirectionStoreRequest.php
-    - app/Http/Requests/GalleryDirectionUpdateRequest.php
-    - app/Http/Requests/ContactLinkStoreRequest.php
-    - app/Http/Requests/ContactLinkUpdateRequest.php
-    - app/Http/Resources/QuickLinkCollection.php
-    - app/Http/Resources/QuickLinkResource.php
-    - app/Http/Resources/GalleryDirectionCollection.php
-    - app/Http/Resources/GalleryDirectionResource.php
-    - app/Http/Resources/ContactLinkCollection.php
-    - app/Http/Resources/ContactLinkResource.php
+    - app/Http/Controllers/VideoFileController.php
+    - database/factories/VideoFileFactory.php
+    - database/migrations/2025_11_04_143435_create_video_files_table.php
+    - app/Models/VideoFile.php
+    - tests/Feature/Http/Controllers/VideoFileControllerTest.php
+    - app/Http/Requests/VideoFileStoreRequest.php
+    - app/Http/Requests/VideoFileUpdateRequest.php
+    - app/Http/Resources/VideoFileCollection.php
+    - app/Http/Resources/VideoFileResource.php
 updated:
     - routes/api.php
 models:
@@ -54,3 +36,4 @@ models:
     QuickLink: { name_en: 'nullable string', name_fr: 'nullable string', description_en: 'nullable string', description_fr: 'nullable string', email: 'nullable string', phone: 'nullable string', address_en: 'nullable string', address_fr: 'nullable string', box: 'nullable string' }
     GalleryDirection: { name_en: 'nullable string', name_fr: 'nullable string', description_en: 'nullable string', description_fr: 'nullable string', image: 'nullable string' }
     ContactLink: { name_en: 'nullable string', name_fr: 'nullable string', description_en: 'nullable string', description_fr: 'nullable string', email: 'nullable string', phone: 'nullable string', address_en: 'nullable string', address_fr: 'nullable string', box: 'nullable string' }
+    VideoFile: { file_path: string, title: string }
