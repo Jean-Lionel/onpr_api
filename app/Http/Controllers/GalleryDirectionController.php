@@ -31,7 +31,6 @@ class GalleryDirectionController extends Controller
 
         // Gestion de l’image si envoyée
         if ($request->hasFile('image')) {
-
             $image = $request->file('image');
             $imageName = time() . '.'. $image->getClientOriginalExtension();
             $destinationPath  = public_path('img/gallery_directions');
