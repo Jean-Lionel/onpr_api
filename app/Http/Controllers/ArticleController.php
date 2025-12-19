@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\UploadFile;
 use App\Http\Requests\StoreArticleRequest;
-use App\Http\Requests\UpdateArticleRequest;
 use App\Models\Article;
 use Illuminate\Http\Request;
 use Stichoza\GoogleTranslate\GoogleTranslate;
-use Image;
 use GuzzleHttp\Exception\ConnectException;
 
 class ArticleController extends Controller
@@ -95,7 +92,7 @@ class ArticleController extends Controller
         if (isset($request->image)) {
             # code...
             $file = $request->file("image"); 
-            $allowedfileExtension=['jpeg','jpg','png','jpeg'];
+            $allowedfileExtension=['jpeg','jpg','png','jpeg' , 'gif', 'JPEG', 'JPG', 'PNG', 'GIF','JPEG'];
             $extension = $file->getClientOriginalExtension();
             $check = in_array($extension,$allowedfileExtension);
 
@@ -110,14 +107,14 @@ class ArticleController extends Controller
             $imageName = time() . '.'. $image->getClientOriginalExtension();
 
             $destinationPath  = public_path('img/articles');
-            $imageFile = Image::make($image->getRealPath());
+            // $imageFile = Image::make($image->getRealPath());
 
-            $imageFile->resize(400,600,function($constraint){
-                $constraint->aspectRatio();
-            })->save($destinationPath .'/'.   $imageName);
+            // $imageFile->resize(400,600,function($constraint){
+            //     $constraint->aspectRatio();
+            // })->save($destinationPath .'/'.   $imageName);
 
             // $destinationPath = public_path('/uploads');
-            // $image->move($destinationPath, $imageName);
+            $image->move($destinationPath, $imageName);
         }
         
         $tr = new GoogleTranslate(); // Translates into English
@@ -181,17 +178,15 @@ class ArticleController extends Controller
             $imageName = time() . '.'. $image->getClientOriginalExtension();
 
             $destinationPath  = public_path('img/articles');
-            $imageFile = Image::make($image->getRealPath());
+            // $imageFile = Image::make($image->getRealPath());
 
-            $imageFile->resize(400,600,function($constraint){
-                $constraint->aspectRatio();
-            })->save($destinationPath .'/'.   $imageName);
+            // $imageFile->resize(400,600,function($constraint){
+            //     $constraint->aspectRatio();
+            // })->save($destinationPath .'/'.   $imageName);
 
             // $destinationPath = public_path('/uploads');
-            // $image->move($destinationPath, $imageName);
+            $image->move($destinationPath, $imageName);
         }
-
-
 
         $article->update([
             'title_en' => $request->title_en,

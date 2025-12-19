@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Slide;
 use App\Http\Requests\StoreSlideRequest;
 use App\Http\Requests\UpdateSlideRequest;
-use Image;
+//use Image;
 
 class SlideController extends Controller
 {
@@ -36,7 +36,7 @@ class SlideController extends Controller
         if (isset($request->image)) {
             # code...
             $file = $request->file("image"); 
-            $allowedfileExtension=['jpeg','jpg','png','jpeg'];
+            $allowedfileExtension=['jpeg','jpg','png','jpeg','gif', 'JPEG', 'JPG', 'PNG', 'GIF'];
             $extension = $file->getClientOriginalExtension();
             $check = in_array($extension,$allowedfileExtension);
 
@@ -50,14 +50,14 @@ class SlideController extends Controller
             $imageName = time() . '.'. $image->getClientOriginalExtension();
 
             $destinationPath  = public_path('img/slides');
-            $imageFile = Image::make($image->getRealPath());
+            // $imageFile = Image::make($image->getRealPath());
 
-            $imageFile->resize(1100,537,function($constraint){
-                $constraint->aspectRatio();
-            })->save($destinationPath .'/'.   $imageName);
+            // $imageFile->resize(1100,537,function($constraint){
+            //     $constraint->aspectRatio();
+            // })->save($destinationPath .'/'.   $imageName);
 
             // $destinationPath = public_path('/uploads');
-            // $image->move($destinationPath, $imageName);
+            $image->move($destinationPath, $imageName);
         }
 
 
