@@ -101,7 +101,6 @@ class ArticleController extends Controller
                 return response()->json(
                     ['error' => 'Unknown extention type '], 400); 
              }
-           
             $image = $request->file('image');
 
             $imageName = time() . '.'. $image->getClientOriginalExtension();
