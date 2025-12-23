@@ -8,7 +8,6 @@ use App\Http\Resources\GalleryDirectionCollection;
 use App\Http\Resources\GalleryDirectionResource;
 use App\Models\GalleryDirection;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class GalleryDirectionController extends Controller
 {
@@ -32,9 +31,10 @@ class GalleryDirectionController extends Controller
         // Gestion de l’image si envoyée
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $imageName = time() . '.'. $image->getClientOriginalExtension();
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
             $destinationPath  = public_path('img/gallery_directions');
-            $image->move($destinationPath, $imageName.);
+            $image->move($destinationPath, $imageName);
+            $data['image'] = 'img/gallery_directions/' . $imageName;
         }
 
         $galleryDirection = GalleryDirection::create($data);
@@ -59,12 +59,18 @@ class GalleryDirectionController extends Controller
 
         // Si nouvelle image, supprimer l’ancienne et enregistrer la nouvelle
         if ($request->hasFile('image')) {
-            if ($galleryDirection->image && Storage::disk('public')->exists($galleryDirection->image)) {
-                Storage::disk('public')->delete($galleryDirection->image);
+            if ($galleryDirection->image) {
+                $oldPath = public_path($galleryDirection->image);
+                if (file_exists($oldPath)) {
+                    unlink($oldPath);
+                }
             }
 
-            $path = $request->file('image')->store('gallery_directions', 'public');
-            $data['image'] = $path;
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $destinationPath = public_path('img/gallery_directions');
+            $image->move($destinationPath, $imageName);
+            $data['image'] = 'img/gallery_directions/' . $imageName;
         }
 
         $galleryDirection->update($data);
@@ -78,8 +84,11 @@ class GalleryDirectionController extends Controller
     public function destroy(Request $request, GalleryDirection $galleryDirection)
     {
         // Supprime aussi le fichier image si présent
-        if ($galleryDirection->image && Storage::disk('public')->exists($galleryDirection->image)) {
-            Storage::disk('public')->delete($galleryDirection->image);
+        if ($galleryDirection->image) {
+            $path = public_path($galleryDirection->image);
+            if (file_exists($path)) {
+                unlink($path);
+            }
         }
 
         $galleryDirection->delete();
