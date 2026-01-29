@@ -1,5 +1,6 @@
 <?php
-namespace App\Http\Controllers; 
+
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -15,22 +16,24 @@ class UserController extends Controller
 {
 
 
-    public function getMember($matricule = null){
+    public function getMember($matricule = null)
+    {
 
-       // $matricule = \Request::get('matricule');
+        // $matricule = \Request::get('matricule');
 
-        $users = User::where('role_id','=',6)
-            ->where(function($q) use ($matricule){
-                if($matricule){
-                    $q->where('numero_matricule', 'like', '%'.$matricule);
+        $users = User::where('role_id', '=', 6)
+            ->where(function ($q) use ($matricule) {
+                if ($matricule) {
+                    $q->where('numero_matricule', 'like', '%' . $matricule);
                 }
             })
-        ->paginate();
+            ->paginate();
 
         return $users;
     }
 
-    public function change_user_password(Request $request){
+    public function change_user_password(Request $request)
+    {
 
         $user = User::find($request->user_id);
         $user->password = bcrypt($request->password);
@@ -55,20 +58,21 @@ class UserController extends Controller
     public function index()
     {
 
-        $data = User::where('role_id' ,'!=',6)->with('role')->orderBy('id','DESC')->paginate(20);
+        $data = User::where('role_id', '!=', 6)->with('role')->orderBy('id', 'DESC')->paginate(20);
         return  $data;
     }
 
-    public function change_password(Request $request){
+    public function change_password(Request $request)
+    {
 
         $user = Auth::user();
-        
 
-        $credintial = $user->email ;
+
+        $credintial = $user->email;
 
         $field = 'email';
 
-        if(!filter_var($credintial, FILTER_VALIDATE_EMAIL)){
+        if (!filter_var($credintial, FILTER_VALIDATE_EMAIL)) {
             $field = 'numero_matricule';
             $credintial = $user->numero_matricule;
         }
@@ -88,28 +92,29 @@ class UserController extends Controller
         ]);
     }
 
-    public function saveMember(Request $request){
+    public function saveMember(Request $request)
+    {
 
         // Validate request data
         $validator = Validator::make($request->all(), [
             'firstName' => 'required|string|max:255',
             'lastName' => 'required|string|max:255',
-          //  'email' => 'required|email|unique:users|max:255',
+            //  'email' => 'required|email|unique:users|max:255',
             'numero_matricule' => 'required|unique:users|max:255',
             'password' => 'required|min:6',
         ]);
-    // Return errors if validation error occur.
+        // Return errors if validation error occur.
         if ($validator->fails()) {
             $errors = $validator->errors();
             return response()->json([
                 'error' => $errors
             ], 400);
         }
-    // Check if validation pass then create user and auth token. Return the auth token
+        // Check if validation pass then create user and auth token. Return the auth token
         if ($validator->passes()) {
             $user = User::create([
-                'name' => $request->firstName . '  '.$request->lastName,
-               // 'email' => $request->email,
+                'name' => $request->firstName . '  ' . $request->lastName,
+                // 'email' => $request->email,
                 'telephone' => $request->telephone,
                 'description' => $request->description,
                 'numero_matricule' => $request->numero_matricule,
@@ -128,22 +133,23 @@ class UserController extends Controller
         return  $request->all();
     }
 
-    public function search($search_key){
+    public function search($search_key)
+    {
 
-         //$search_key = $request->query('search_key');
+        //$search_key = $request->query('search_key');
 
-       if($search_key == 'ALL_DATA') return User::with('role')->orderBy('id','DESC')->paginate(20);
+        if ($search_key == 'ALL_DATA') return User::with('role')->orderBy('id', 'DESC')->paginate(20);
 
-       $users = User::where(function($query) use ($search_key){
-        if($search_key){
-            $query->where('name', 'like', '%'.$search_key . '%' )
-            ->orWhere('email', 'like', '%'.$search_key. '%');
-        }
-    })->paginate(20);
+        $users = User::where(function ($query) use ($search_key) {
+            if ($search_key) {
+                $query->where('name', 'like', '%' . $search_key . '%')
+                    ->orWhere('email', 'like', '%' . $search_key . '%');
+            }
+        })->paginate(20);
 
 
-       return $users;
-   }
+        return $users;
+    }
 
 
 
@@ -160,11 +166,12 @@ class UserController extends Controller
 
     public function create()
     {
-        $roles = Role::pluck('name','name')->all();
+        $roles = Role::pluck('name', 'name')->all();
         return $roles;
     }
 
-    public function addRole($role_id){
+    public function addRole($role_id)
+    {
 
         $user->roles()->sync($request->roles);
         return response()->json([
@@ -198,17 +205,17 @@ class UserController extends Controller
 
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
-        
+
         $user = User::create($input);
         // return redirect()->route('users.index')
         //   ->with('success','User created successfully');
         return response()->json([
-            'success','User created successfully'
+            'success',
+            'User created successfully'
         ]);
-
     }
 
-    
+
 
     /**
 
@@ -229,16 +236,16 @@ class UserController extends Controller
         $user = User::find($id);
 
         return $user;
-
     }
 
-    public function foregetPassword(Request $request){
+    public function foregetPassword(Request $request)
+    {
         $email = $request->email;
 
         $user = User::where('email', $email)->first();
     }
 
-    
+
 
     /**
 
@@ -258,9 +265,9 @@ class UserController extends Controller
 
         $user = User::find($id);
 
-        $roles = Role::pluck('name','name')->all();
+        $roles = Role::pluck('name', 'name')->all();
 
-        $userRole = $user->roles->pluck('name','name')->all();
+        $userRole = $user->roles->pluck('name', 'name')->all();
 
         return response()->json([
 
@@ -269,11 +276,11 @@ class UserController extends Controller
             "userRole" => $userRole,
 
         ]);
-       // return view('users.edit',compact('user','roles','userRole'));
+        // return view('users.edit',compact('user','roles','userRole'));
 
     }
 
-    
+
 
     /**
 
@@ -297,32 +304,30 @@ class UserController extends Controller
 
             'name' => 'required',
 
-            'email' => 'required|email|unique:users,email,'.$id,
+            'email' => 'required|email|unique:users,email,' . $id,
 
         ]);
-        
+
         $input = $request->all();
 
-        if(!empty($input['password'])){ 
+        if (!empty($input['password'])) {
 
             $input['password'] = Hash::make($input['password']);
+        } else {
 
-        }else{
-
-            $input = Arr::except($input,array('password'));    
-
+            $input = Arr::except($input, array('password'));
         }
         $user = User::find($id);
 
         $user->update($input);
-        
-        return response()->json([
-            'success','User updated successfully'
-        ]);
 
+        return response()->json([
+            'success',
+            'User updated successfully'
+        ]);
     }
 
-    
+
 
     /**
 
@@ -346,9 +351,8 @@ class UserController extends Controller
 
         //                 ->with('success','User deleted successfully');
         return response()->json([
-            'success','User deleted successfully'
+            'success',
+            'User deleted successfully'
         ]);
-
     }
-
 }
