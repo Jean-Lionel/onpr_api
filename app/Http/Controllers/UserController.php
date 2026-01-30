@@ -99,7 +99,7 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'firstName' => 'required|string|max:255',
             'lastName' => 'required|string|max:255',
-            //  'email' => 'required|email|unique:users|max:255',
+            'email' => 'required|email|unique:users|max:255',
             'numero_matricule' => 'required|unique:users|max:255',
             'password' => 'required|min:6',
         ]);
@@ -114,7 +114,7 @@ class UserController extends Controller
         if ($validator->passes()) {
             $user = User::create([
                 'name' => $request->firstName . '  ' . $request->lastName,
-                // 'email' => $request->email,
+                'email' => $request->email,
                 'telephone' => $request->telephone,
                 'description' => $request->description,
                 'numero_matricule' => $request->numero_matricule,
@@ -124,7 +124,14 @@ class UserController extends Controller
             $token = $user->createToken('auth_token')->plainTextToken;
 
             return response()->json([
-                'data' => Auth::user(),
+                'data' => $user ?? [
+                    'name' => $request->firstName . '  ' . $request->lastName,
+                    'email' => $request->email,
+                    'telephone' => $request->telephone,
+                    'description' => $request->description,
+                    'numero_matricule' => $request->numero_matricule,
+                    'role_id' => 6,
+                ],
                 'access_token' => $token,
                 'token_type' => 'Bearer',
             ]);
