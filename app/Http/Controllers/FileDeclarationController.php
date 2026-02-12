@@ -37,7 +37,7 @@ class FileDeclarationController extends Controller
         if (isset($request->file)) {
             # code...
             $file = $request->file("file"); 
-            $allowedfileExtension=['pdf','xls','xlsx'];
+            $allowedfileExtension=['pdf','xls','xlsx', 'docx'];
             $extension = $file->getClientOriginalExtension();
             $check = in_array($extension,$allowedfileExtension);
             if (!$check) {

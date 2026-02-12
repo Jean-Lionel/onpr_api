@@ -21,13 +21,10 @@ class GalleryDirection extends Model
     /**
      * Retourne l’URL publique de l’image.
      */
-    protected $appends = ['image_url'];
+    protected $appends = [];
 
-    public function getImageUrlAttribute()
+    public function getImageAttribute($value)
     {
-        if ($this->image && Storage::disk('public')->exists($this->image)) {
-            return asset( Storage::url($this->image) );
-        }
-        return null;
+        return url($value);
     }
 }

@@ -62,7 +62,7 @@ class UserController extends Controller
                     ->whereHas('role', function($q) {
                         $q->where('name', 'not like', '%EMPLOYEUR%');
                     })
-                    ->with('role')
+                    ->with(['role', 'institution'])
                     ->paginate($perPage);
         return  $data;
     }
@@ -154,7 +154,7 @@ class UserController extends Controller
                         ->whereHas('role', function($q) {
                              $q->where('name', 'not like', '%EMPLOYEUR%');
                         })
-                        ->with('role')
+                        ->with(['role', 'institution'])
                         ->latest()
                         ->paginate($perPage);
         }
@@ -164,7 +164,7 @@ class UserController extends Controller
                 $query->where('name', 'like', '%' . $search_key . '%')
                     ->orWhere('email', 'like', '%' . $search_key . '%');
             }
-        })->paginate($perPage);
+        })->with(['role', 'institution'])->latest()->paginate($perPage);
 
 
         return $users;
