@@ -16,7 +16,7 @@ class GalleryDirectionController extends Controller
      */
     public function index(Request $request)
     {
-        $galleryDirections = GalleryDirection::all();
+        $galleryDirections = GalleryDirection::all();   
 
         return new GalleryDirectionCollection($galleryDirections);
     }
@@ -31,8 +31,17 @@ class GalleryDirectionController extends Controller
         // Gestion de l’image si envoyée
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $destinationPath  = public_path('img/gallery_directions');
+            // Ensure the extension is preserved
+            $extension = $image->getClientOriginalExtension(); 
+            $imageName = time() . '_' . uniqid() . '.' . $extension;
+            
+            $destinationPath = public_path('img/gallery_directions');
+            
+            // Create directory if it doesn't exist
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0775, true);
+            }
+
             $image->move($destinationPath, $imageName);
             $data['image'] = 'img/gallery_directions/' . $imageName;
         }
@@ -60,15 +69,32 @@ class GalleryDirectionController extends Controller
         // Si nouvelle image, supprimer l’ancienne et enregistrer la nouvelle
         if ($request->hasFile('image')) {
             if ($galleryDirection->image) {
-                $oldPath = public_path($galleryDirection->image);
+                // Since getImageAttribute adds full URL, we need to handle the raw attribute or check if it exists in public path
+                // But here $galleryDirection->image comes from the model accessor? No, inside controller $galleryDirection->image is usually the raw attribute unless accessed via array/json.
+                // Eloquent accessors are called when accessing the property. 
+                // However, GalleryDirection methods might access raw attributes if not appended? 
+                // Let's assume we need to deal with the stored path. 
+                // BUT wait, I modified the model to have `getImageAttribute` which returns `url($value)`. 
+                // So `$galleryDirection->image` will be the FULL URL. 
+                // To get the relative path for unlink, I need the raw attribute. 
+                // accessing `$galleryDirection->getRawOriginal('image')` is safer.
+
+                $oldPath = public_path($galleryDirection->getRawOriginal('image'));
                 if (file_exists($oldPath)) {
-                    unlink($oldPath);
+                    @unlink($oldPath);
                 }
             }
 
             $image = $request->file('image');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $extension = $image->getClientOriginalExtension();
+            $imageName = time() . '_' . uniqid() . '.' . $extension;
+            
             $destinationPath = public_path('img/gallery_directions');
+
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0775, true);
+            }
+
             $image->move($destinationPath, $imageName);
             $data['image'] = 'img/gallery_directions/' . $imageName;
         }
@@ -85,9 +111,9 @@ class GalleryDirectionController extends Controller
     {
         // Supprime aussi le fichier image si présent
         if ($galleryDirection->image) {
-            $path = public_path($galleryDirection->image);
+            $path = public_path($galleryDirection->getRawOriginal('image'));
             if (file_exists($path)) {
-                unlink($path);
+                @unlink($path);
             }
         }
 

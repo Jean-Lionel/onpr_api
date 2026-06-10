@@ -20,7 +20,7 @@ class GalleryDirectionResource extends JsonResource
             'name_fr' => $this->name_fr,
             'description_en' => $this->description_en,
             'description_fr' => $this->description_fr,
-            'image_url' => $this->image_url,
+            'image_url' => $this->image,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

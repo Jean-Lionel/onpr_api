@@ -59,6 +59,11 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class,  'role_id','id');
     }
 
+    public function institution()
+    {
+        return $this->belongsTo(Institution::class);
+    }
+
     public function isAdmin(){
 
         return $this->role->name === 'ADMINISTRATEUR';

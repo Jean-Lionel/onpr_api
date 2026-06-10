@@ -55,10 +55,15 @@ class UserController extends Controller
 
      */
 
-    public function index()
+    public function index(Request $request)
     {
-
-        $data = User::where('role_id', '!=', 6)->with('role')->orderBy('id', 'DESC')->paginate(20);
+        $perPage = $request->input('per_page', 20);
+        $data = User::where('role_id', '!=', 6)
+                    ->whereHas('role', function($q) {
+                        $q->where('name', 'not like', '%EMPLOYEUR%');
+                    })
+                    ->with(['role', 'institution'])
+                    ->paginate($perPage);
         return  $data;
     }
 
@@ -140,19 +145,26 @@ class UserController extends Controller
         return  $request->all();
     }
 
-    public function search($search_key)
+    public function search(Request $request, $search_key)
     {
+        $perPage = $request->input('per_page', 20);
 
-        //$search_key = $request->query('search_key');
-
-        if ($search_key == 'ALL_DATA') return User::with('role')->orderBy('id', 'DESC')->paginate(20);
+        if ($search_key == 'ALL_DATA') {
+            return User::where('role_id', '!=', 6)
+                        ->whereHas('role', function($q) {
+                             $q->where('name', 'not like', '%EMPLOYEUR%');
+                        })
+                        ->with(['role', 'institution'])
+                        ->latest()
+                        ->paginate($perPage);
+        }
 
         $users = User::where(function ($query) use ($search_key) {
             if ($search_key) {
                 $query->where('name', 'like', '%' . $search_key . '%')
                     ->orWhere('email', 'like', '%' . $search_key . '%');
             }
-        })->paginate(20);
+        })->with(['role', 'institution'])->latest()->paginate($perPage);
 
 
         return $users;

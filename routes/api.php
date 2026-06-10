@@ -165,6 +165,9 @@ Route::middleware(['auth:sanctum', 'can:is-member'])->group(function(){
 
 Route::post('logout', [AuthController::class, 'logout']);
 
+Route::post('forgot-password', [App\Http\Controllers\Api\PasswordResetController::class, 'forgotPassword']);
+Route::post('reset-password', [App\Http\Controllers\Api\PasswordResetController::class, 'resetPassword']);
+
  Route::apiResource('informations', InformationController::class);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

@@ -21,9 +21,9 @@ class GalleryDirection extends Model
     /**
      * Retourne l’URL publique de l’image.
      */
-    protected $appends = ['image_url'];
+    protected $appends = [];
 
-    public function getImageUrlAttribute()
+    public function getImageAttribute($value)
     {
         return $this->image ? asset($this->image) : null;
     }
