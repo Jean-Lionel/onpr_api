@@ -352,7 +352,7 @@ class UserController extends Controller
 
     {
 
-        User::find($id)->delete();
+        User::find($id)->forceDelete();
 
         // return redirect()->route('users.index')
 

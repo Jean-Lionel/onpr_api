@@ -26,8 +26,8 @@ class GalleryDirectionController extends Controller
      */
     public function store(GalleryDirectionStoreRequest $request)
     {
-        $data = $request->validated();
 
+        $data = $request->validated();
         // Gestion de l’image si envoyée
         if ($request->hasFile('image')) {
             $image = $request->file('image');
