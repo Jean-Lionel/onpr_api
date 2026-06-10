@@ -1,7 +1,7 @@
 <?php
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
-header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token, Authorization, Accept,charset,boundary,Content-Length');
+// header('Access-Control-Allow-Origin: *');
+// header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
+// header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token, Authorization, Accept,charset,boundary,Content-Length');
 
 
 use Illuminate\Http\Request;
@@ -43,21 +43,21 @@ use App\Http\Controllers\PhotoWeekController;
 Route::post('register', [AuthController::class, 'register']);
 Route::post('saveMember', [UserController::class,  'saveMember']);
 Route::post('login', [AuthController::class, 'login']);
-Route::apiResource('youtube_medias', YoutubeMediaController::class,[
-            'except' => ['store', 'destroy']
-        ]);
+Route::apiResource('youtube_medias', YoutubeMediaController::class, [
+    'except' => ['store', 'destroy']
+]);
 
 
- Route::apiResource('articles', ArticleController::class,[
-            'accept' => ['index', 'show']
-        ]);
+Route::apiResource('articles', ArticleController::class, [
+    'accept' => ['index', 'show']
+]);
 
-Route::apiResource('youtube_medias', ArticleController::class,[
-        'except' => ['index', 'show']
-    ]);
+Route::apiResource('youtube_medias', ArticleController::class, [
+    'except' => ['index', 'show']
+]);
 Route::apiResource('slides', SlideController::class, [
-        'accept' => ['index', 'show']
-    ]);
+    'accept' => ['index', 'show']
+]);
 Route::apiResource('file_declarations', FileDeclarationController::class);
 Route::get("searchArticle/{key_word ?}", [ArticleController::class, 'search']);
 Route::get("Translator_art", [ArticleController::class, 'articleTranslater']);
@@ -69,53 +69,57 @@ Route::get("cotisations_afiliers/{matricule}", [CotisationAfilierController::cla
 
 //Route::apiResource("declaration", [DeclarationController::class, 'store']);
 
- Route::apiResource('adminheades', AdminHeaderController::class,[
-            'accept' => ['index', 'show']
-        ]);
-    Route::apiResource('admin_contents', AdminContentController::class,[
-            'accept' => ['index', 'show']
-        ]);
-     Route::apiResource('downloawddoc', DownloawdDocController::class);
-     Route::apiResource('annonces', AnnonceController::class,[
-            'accept' => ['index', 'show']
-        ]);
-     Route::get("Translator_annon", [AnnonceController::class, 'annonceTranslater']);
+Route::apiResource('adminheades', AdminHeaderController::class, [
+    'accept' => ['index', 'show']
+]);
+Route::apiResource('admin_contents', AdminContentController::class, [
+    'accept' => ['index', 'show']
+]);
+Route::apiResource('downloawddoc', DownloawdDocController::class);
+Route::apiResource('annonces', AnnonceController::class, [
+    'accept' => ['index', 'show']
+]);
+Route::get("Translator_annon", [AnnonceController::class, 'annonceTranslater']);
 
-     Route::apiResource('declarations', DeclarationController::class);
-    // =========================================================
-    Route::middleware(['auth:sanctum', 'can:is-Notmember'])->group(function () {
+Route::apiResource('declarations', DeclarationController::class);
+// =========================================================
+Route::middleware(['auth:sanctum', 'can:is-Notmember'])->group(function () {
 
-    Route::get('me',[AuthController::class, 'me']);
+    Route::get('me', [AuthController::class, 'me']);
 
-    Route::get('list_chargements', [ CotisationAfilierController::class, 'list_chargements']);
+    Route::get('list_chargements', [CotisationAfilierController::class, 'list_chargements']);
     // Route::post('/articles', [ArticleController::class, 'store']);
-    Route::apiResource('articles', ArticleController::class,[
-            'except' => ['index', 'show']
-        ]);
-    Route::apiResource('slides', SlideController::class,[
-            'except' => ['index', 'show']
-        ]);
+    Route::apiResource('articles', ArticleController::class, [
+        'except' => ['index', 'show']
+    ]);
+    Route::apiResource('slides', SlideController::class, [
+        'except' => ['index', 'show']
+    ]);
     // Route::apiResource('downloawddoc', DownloawdDocController::class,[
     //         'except' => ['index', 'show']
     //     ]);
-    Route::apiResource('annonces', AnnonceController::class,[
-            'except' => ['index', 'show']
-        ]);
+    Route::apiResource('annonces', AnnonceController::class, [
+        'except' => ['index', 'show']
+    ]);
     // Route::get("users/institution/{id}", [UserController::class, 'get_user_by_instutions' ])
-    Route::get('get_user_by_instutions/{institution_id}', [InstitutionController::class, 'get_user_by_instutions'
+    Route::get('get_user_by_instutions/{institution_id}', [
+        InstitutionController::class,
+        'get_user_by_instutions'
     ]);
-    Route::get('get_user_instution', [InstitutionController::class, 'getUserInstution'
+    Route::get('get_user_instution', [
+        InstitutionController::class,
+        'getUserInstution'
     ]);
-    Route::apiResource('youtube_medias', YoutubeMediaController::class,[
-            'except' => ['index', 'show']
-        ]);
-    Route::apiResource('adminheades', AdminHeaderController::class,[
-            'except' => ['index', 'show']
-        ]);
+    Route::apiResource('youtube_medias', YoutubeMediaController::class, [
+        'except' => ['index', 'show']
+    ]);
+    Route::apiResource('adminheades', AdminHeaderController::class, [
+        'except' => ['index', 'show']
+    ]);
     Route::post('adminheadesTraduction', [AdminHeaderController::class, "adminheadesTraduction"]);
-    Route::apiResource('admin_contents', AdminContentController::class,[
-            'except' => ['index', 'show']
-        ]);
+    Route::apiResource('admin_contents', AdminContentController::class, [
+        'except' => ['index', 'show']
+    ]);
     Route::post("admin_contents_translate", [AdminContentController::class, "admin_contents_translate"]);
 
     Route::get('declarations/search/{search_key}', [DeclarationController::class, 'search']);
@@ -132,11 +136,10 @@ Route::get("cotisations_afiliers/{matricule}", [CotisationAfilierController::cla
     Route::get('institutions/search/{search_key}', [InstitutionController::class, 'search']);
     Route::get('users/search/{search_key}', [UserController::class, 'search']);
     Route::apiResource('roles', RoleController::class);
-   Route::apiResource('cotisation_detaches', CotisationDetacheController::class);
+    Route::apiResource('cotisation_detaches', CotisationDetacheController::class);
 
-   Route::get('get_member/{matricule?}', [UserController::class , 'getMember']);
-   Route::post('change_user_password', [UserController::class , 'change_user_password']);
-
+    Route::get('get_member/{matricule?}', [UserController::class, 'getMember']);
+    Route::post('change_user_password', [UserController::class, 'change_user_password']);
 });
 
 Route::apiResource('gallery', GalleryController::class);
@@ -156,11 +159,10 @@ Route::apiResource('photo-week', PhotoWeekController::class);
 Route::get('photo-weeks/active', [PhotoWeekController::class, 'active']);
 
 // Route pour un visiteur connecté
-Route::middleware(['auth:sanctum', 'can:is-member'])->group(function(){
+Route::middleware(['auth:sanctum', 'can:is-member'])->group(function () {
 
     Route::get("cotisation_detaches", [CotisationDetacheController::class, "searchByMatricule"]);
     Route::post('change_password', [UserController::class, 'change_password']);
-
 });
 
 Route::post('logout', [AuthController::class, 'logout']);
@@ -168,7 +170,7 @@ Route::post('logout', [AuthController::class, 'logout']);
 Route::post('forgot-password', [App\Http\Controllers\Api\PasswordResetController::class, 'forgotPassword']);
 Route::post('reset-password', [App\Http\Controllers\Api\PasswordResetController::class, 'resetPassword']);
 
- Route::apiResource('informations', InformationController::class);
+Route::apiResource('informations', InformationController::class);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
