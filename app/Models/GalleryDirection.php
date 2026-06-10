@@ -25,6 +25,6 @@ class GalleryDirection extends Model
 
     public function getImageAttribute($value)
     {
-        return $this->image ? asset($this->image) : null;
+        return $value ? asset($value) : null;
     }
 }
