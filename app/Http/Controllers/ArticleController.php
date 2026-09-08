@@ -36,22 +36,24 @@ class ArticleController extends Controller
      *     )
      */
 
-    public function index(){   
+    public function index()
+    {
         return Article::latest()->paginate(4);
     }
 
-    public function toutArticles(){
+    public function toutArticles()
+    {
         return Article::latest()->get();
     }
 
-    public function articleTranslater(Request $request){
-        
-        if(!empty($request->body)){
+    public function articleTranslater(Request $request)
+    {
+
+        if (!empty($request->body)) {
             return $this->translateSafely($request->body);
-        }else{
+        } else {
             return 'Please, add some text to translate';
         }
-       
     }
 
     private function translateSafely(string $text): string
@@ -99,19 +101,21 @@ class ArticleController extends Controller
         $imageName = '';
         if (isset($request->image)) {
             # code...
-            $file = $request->file("image"); 
-            $allowedfileExtension=['jpeg','jpg','png','jpeg' , 'gif', 'JPEG', 'JPG', 'PNG', 'GIF','JPEG'];
+            $file = $request->file("image");
+            $allowedfileExtension = ['jpeg', 'jpg', 'png', 'jpeg', 'gif', 'JPEG', 'JPG', 'PNG', 'GIF', 'JPEG'];
             $extension = $file->getClientOriginalExtension();
-            $check = in_array($extension,$allowedfileExtension);
+            $check = in_array($extension, $allowedfileExtension);
 
             if (!$check) {
-            // code...
+                // code...
                 return response()->json(
-                    ['error' => 'Unknown extention type '], 400); 
-             }
+                    ['error' => 'Unknown extention type '],
+                    400
+                );
+            }
             $image = $request->file('image');
 
-            $imageName = time() . '.'. $image->getClientOriginalExtension();
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
 
             $destinationPath  = public_path('img/articles');
             // $imageFile = Image::make($image->getRealPath());
@@ -123,13 +127,13 @@ class ArticleController extends Controller
             // $destinationPath = public_path('/uploads');
             $image->move($destinationPath, $imageName);
         }
-        
+
         $article = Article::create([
             'title' => $request->title,
             'title_en' => $request->title_en ?? $this->translateSafely($request->title),
             'body' => $request->body,
-            'body_en'=> $request->body_en ?? $this->translateSafely($request->body),
-            'image' => $imageName,           
+            'body_en' => $request->body_en ?? $this->translateSafely($request->body),
+            'image' => $imageName,
             'image_alt' => $request->title,
             'image_caption' => $request->image_caption,
 
@@ -148,12 +152,13 @@ class ArticleController extends Controller
         return $article;
     }
 
-    public function search($key_word){
-        $listeArclices = Article::where(function($query) use($key_word){
-            $query->where('title','LIKE', '%'.$key_word.'%')
-                  ->OrWhere('body', 'LIKE', '%'.$key_word.'%')
-                  ->OrWhere('slug', 'LIKE', '%'.$key_word.'%')
-                  ;
+    public function search($key_word)
+    {
+        $listeArclices = Article::where(function ($query) use ($key_word) {
+            $query->where('title', 'LIKE', '%' . $key_word . '%')
+                ->OrWhere('body', 'LIKE', '%' . $key_word . '%')
+                ->OrWhere('slug', 'LIKE', '%' . $key_word . '%')
+            ;
         })->paginate();
         return $listeArclices;
     }
@@ -161,27 +166,29 @@ class ArticleController extends Controller
 
     public function update(Request $request,  $id)
     {
-        
+
         $article = Article::find($id);
 
 
-         $imageName = $article->image;
+        $imageName = $article->image;
         if (isset($request->image)) {
             # code...
-            $file = $request->file("image"); 
-            $allowedfileExtension=['jpeg','jpg','png','jpeg'];
+            $file = $request->file("image");
+            $allowedfileExtension = ['jpeg', 'jpg', 'png', 'jpeg'];
             $extension = $file->getClientOriginalExtension();
-            $check = in_array($extension,$allowedfileExtension);
+            $check = in_array($extension, $allowedfileExtension);
 
             if (!$check) {
-            // code...
+                // code...
                 return response()->json(
-                    ['error' => 'Unknown extention type '], 400); 
-             }
-           
+                    ['error' => 'Unknown extention type '],
+                    400
+                );
+            }
+
             $image = $request->file('image');
 
-            $imageName = time() . '.'. $image->getClientOriginalExtension();
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
 
             $destinationPath  = public_path('img/articles');
             // $imageFile = Image::make($image->getRealPath());
@@ -199,22 +206,22 @@ class ArticleController extends Controller
             'body_en' => $request->body_en,
             'body' => $request->body,
             'title' => $request->title,
-            'image' => $imageName, 
+            'image' => $imageName,
         ]);
 
         return response()->json([
             "success" => "update successfully",
             "article" => $article,
-            
-        ],200);
+
+        ], 200);
     }
 
 
     public function destroy(Article $article)
     {
-       $article->delete();
-       return response()->json([
-        "success" => "delete successfully",
-       ],200);
+        $article->delete();
+        return response()->json([
+            "success" => "delete successfully",
+        ], 200);
     }
 }
