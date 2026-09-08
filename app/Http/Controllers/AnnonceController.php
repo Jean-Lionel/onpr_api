@@ -21,17 +21,18 @@ class AnnonceController extends Controller
         return Annonce::latest()->paginate();
     }
 
-    public function annonceTranslater(Request $request){
-        
+    public function annonceTranslater(Request $request)
+    {
+
         if (!empty($request->body)) {
             $Error = 'Erreur de connexion';
-            $tr = new GoogleTranslate();
+
             try {
+                $tr = new GoogleTranslate();
                 return $tr->setSource('fr')->setTarget('en')->translate($request->body);
-            } catch(ConnectException $e){
-                return $ErrorConnection;
+            } catch (ConnectException $e) {
             }
-        }else{
+        } else {
             return 'Please, add some text to translate';
         }
     }
@@ -43,13 +44,13 @@ class AnnonceController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(StoreAnnonceRequest $request)
-    {   
-        $tr = new GoogleTranslate(); // Translates into English
+    {
+        //  $tr = new GoogleTranslate(); // Translates into English
         Annonce::create([
             'body' =>  $request->body,
-            'body_en'=> $request->body_en ?? articleTranslater($request->body),
+            'body_en' => $request->body_en ?? articleTranslater($request->body),
             'title' =>  $request->title,
-            'title_en' =>$request->title_en ?? articleTranslater($request->title),
+            'title_en' => $request->title_en ?? articleTranslater($request->title),
             'user_id' =>  auth('sanctum')->user()->id,
         ]);
 
@@ -83,14 +84,14 @@ class AnnonceController extends Controller
 
         $annonce = Annonce::find($id);
 
-         $annonce->update([
-            'body_en'=> $request->body_en,
-            'body'=> $request->body,
-            'title' =>$request->title,
-            'title_en' =>$request->title_en,
+        $annonce->update([
+            'body_en' => $request->body_en,
+            'body' => $request->body,
+            'title' => $request->title,
+            'title_en' => $request->title_en,
             'user_id' =>  auth('sanctum')->user()->id,
         ]);
-    
+
         return response()->json([
             'success' => 'updated success'
         ]);
@@ -102,7 +103,7 @@ class AnnonceController extends Controller
      * @param  \App\Models\Annonce  $annonce
      * @return \Illuminate\Http\Response
      */
-    public function destroy( $annonce)
+    public function destroy($annonce)
     {
         Annonce::find($annonce)->delete();
         return response()->json([

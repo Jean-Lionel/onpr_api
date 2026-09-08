@@ -47,17 +47,25 @@ class ArticleController extends Controller
     public function articleTranslater(Request $request){
         
         if(!empty($request->body)){
-            $Error = 'Erreur de connexion';
-            $tr = new GoogleTranslate();
-            try {
-                return $tr->setSource('fr')->setTarget('en')->translate($request->body);
-            } catch(ConnectException $e){
-                return $Error;
-             }
+            return $this->translateSafely($request->body);
         }else{
             return 'Please, add some text to translate';
         }
        
+    }
+
+    private function translateSafely(string $text): string
+    {
+        try {
+            return (string) (new GoogleTranslate())
+                ->setSource('fr')
+                ->setTarget('en')
+                ->translate($text);
+        } catch (\Throwable $exception) {
+            report($exception);
+
+            return $text;
+        }
     }
 
     /**
@@ -116,12 +124,11 @@ class ArticleController extends Controller
             $image->move($destinationPath, $imageName);
         }
         
-        $tr = new GoogleTranslate(); // Translates into English
         $article = Article::create([
             'title' => $request->title,
-            'title_en' => $tr->setSource('fr')->setTarget('en')->translate($request->title) ?? $request->title,
+            'title_en' => $request->title_en ?? $this->translateSafely($request->title),
             'body' => $request->body,
-            'body_en'=> $request->body_en ?? $tr->setSource('fr')->setTarget('en')->translate($request->body),
+            'body_en'=> $request->body_en ?? $this->translateSafely($request->body),
             'image' => $imageName,           
             'image_alt' => $request->title,
             'image_caption' => $request->image_caption,
