@@ -28,7 +28,7 @@ class GalleryDirectionStoreRequest extends FormRequest
             'name_fr' => 'nullable|string',
             'description_en' => 'nullable|string',
             'description_fr' => 'nullable|string',
-            'image' => 'nullable|image|max:5120', // max 5MB
+            'image' => 'nullable|image|max:80000',
         ];
     }
 }
